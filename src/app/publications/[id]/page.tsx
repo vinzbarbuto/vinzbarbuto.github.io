@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { publications } from "@/data/publications";
+import { withBasePath } from "@/lib/basePath";
 
 export function generateStaticParams() {
     return publications.map((pub) => ({
@@ -24,9 +25,9 @@ export default async function PublicationDetailPage(props: { params: Promise<{ i
                 <ArrowLeft size={16} /> Back to Publications
             </Link>
 
-            <div style={{ position: "relative", width: "100%", height: "300px", borderRadius: "1rem", overflow: "hidden", marginBottom: "3rem", backgroundColor: "var(--card-bg)" }}>
+            <div style={{ position: "relative", width: "100%", height: "400px", borderRadius: "1rem", overflow: "hidden", marginBottom: "3rem", backgroundColor: "var(--card-bg)" }}>
                 <Image
-                    src={pub.image || "/placeholder.webp"}
+                    src={withBasePath(pub.image || "/placeholder.webp")}
                     alt={pub.title}
                     fill
                     style={{ objectFit: "cover" }}

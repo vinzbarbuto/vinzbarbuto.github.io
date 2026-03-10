@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionLayout from "@/components/SectionLayout";
 import { projects } from "@/data/projects";
+import { withBasePath } from "@/lib/basePath";
 import styles from "../page.module.css";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function ProjectsPage() {
                         {/* Optimized Image Container */}
                         <div className={styles.previewImageWrapper}>
                             <Image
-                                src={project.image || "/placeholder.webp"}
+                                src={withBasePath(project.image || "/placeholder.webp")}
                                 alt={project.title}
                                 fill
                                 style={{ objectFit: "cover" }}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import SectionLayout from "@/components/SectionLayout";
 import { talks } from "@/data/talks";
 import { Calendar, MapPin } from "lucide-react";
+import { withBasePath } from "@/lib/basePath";
 import styles from "../page.module.css";
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function TalksPage() {
                         {/* Optimized Image Container */}
                         <div className={styles.previewImageWrapper}>
                             <Image
-                                src={talk.image || "/placeholder.webp"}
+                                src={withBasePath(talk.image || "/placeholder.webp")}
                                 alt={talk.title}
                                 fill
                                 style={{ objectFit: "cover" }}

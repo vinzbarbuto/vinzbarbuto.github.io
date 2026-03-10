@@ -1,11 +1,17 @@
 import type { NextConfig } from "next";
 
+// In production (GitHub Pages), the site is served from a repository subpath.
+// Both basePath and assetPrefix must be set so that pages AND _next chunks resolve.
+const isProd = process.env.NODE_ENV === "production";
+const repoPath = "/vincenzo-barbuto.github.io";
+
 const nextConfig: NextConfig = {
-  output: "export", // Optional, but helps ensure the build behaves correctly for GH Pages
+  output: "export",
+  basePath: isProd ? repoPath : "",
+  assetPrefix: isProd ? repoPath : "", // fixes _next/static JS & CSS chunk 404s
   images: {
-    unoptimized: true, // MUST be true for GitHub Pages since it doesn't support Next.js image optimization
+    unoptimized: true,
   },
-  basePath: "/vincenzo-barbuto.github.io", // Required for GitHub Pages project site
 };
 
 export default nextConfig;

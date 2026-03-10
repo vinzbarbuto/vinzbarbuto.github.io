@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, MapPin } from "lucide-react";
 import { talks } from "@/data/talks";
+import { withBasePath } from "@/lib/basePath";
 
 export function generateStaticParams() {
     return talks.map((talk) => ({
@@ -26,7 +27,7 @@ export default async function TalkDetailPage(props: { params: Promise<{ id: stri
 
             <div style={{ position: "relative", width: "100%", height: "400px", borderRadius: "1rem", overflow: "hidden", marginBottom: "3rem", backgroundColor: "var(--card-bg)" }}>
                 <Image
-                    src={talk.image || "/placeholder.webp"}
+                    src={withBasePath(talk.image || "/placeholder.webp")}
                     alt={talk.title}
                     fill
                     style={{ objectFit: "cover" }}

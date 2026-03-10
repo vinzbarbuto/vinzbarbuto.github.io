@@ -7,6 +7,7 @@ import HeroVisuals from "@/components/HeroVisuals";
 import { profile } from "@/data/profile";
 import { publications } from "@/data/publications";
 import { talks } from "@/data/talks";
+import { withBasePath } from "@/lib/basePath";
 
 export default function Home() {
   const recentPublications = publications.slice(0, 3);
@@ -132,7 +133,7 @@ export default function Home() {
 
           <div className={styles.featuredImageBackground}>
             <Image
-              src="/placeholder.webp"
+              src={withBasePath("/placeholder.webp")}
               alt="Opportunistic Digital Twins with Lingua Franca"
               fill
               style={{ objectFit: "cover", objectPosition: "center" }}
@@ -166,7 +167,7 @@ export default function Home() {
             <Link href={`/publications/${pub.id}`} key={pub.id} className={styles.previewCard}>
               <div className={styles.previewImageWrapper}>
                 <Image
-                  src={pub.image || "/placeholder.webp"}
+                  src={withBasePath(pub.image || "/placeholder.webp")}
                   alt={pub.title}
                   fill
                   style={{ objectFit: "cover" }}
@@ -217,7 +218,7 @@ export default function Home() {
             <Link href={`/talks/${talk.id}`} key={talk.id} className={styles.previewCard}>
               <div className={styles.previewImageWrapper}>
                 <Image
-                  src={talk.image || "/placeholder.webp"}
+                  src={withBasePath(talk.image || "/placeholder.webp")}
                   alt={talk.title}
                   fill
                   style={{ objectFit: "cover" }}

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import styles from "../app/page.module.css";
 import { profile } from "@/data/profile";
+import { withBasePath } from "@/lib/basePath";
 
 export default function HeroVisuals() {
     const [isHovered, setIsHovered] = useState(false);
@@ -88,7 +89,7 @@ export default function HeroVisuals() {
 
                     {/* The Base Real Image */}
                     <Image
-                        src="/images/profile.webp"
+                        src={withBasePath("/images/profile.webp")}
                         alt={profile.name}
                         fill
                         sizes="(max-width: 768px) 150px, 300px"
@@ -107,7 +108,7 @@ export default function HeroVisuals() {
                         }}
                     >
                         <Image
-                            src="/images/profile.webp"
+                            src={withBasePath("/images/profile.webp")}
                             alt={profile.name}
                             fill
                             sizes="(max-width: 768px) 150px, 300px"

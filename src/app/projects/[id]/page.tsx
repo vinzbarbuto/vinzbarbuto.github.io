@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { projects } from "@/data/projects";
+import { withBasePath } from "@/lib/basePath";
 
 export function generateStaticParams() {
     return projects.map((proj) => ({
@@ -26,7 +27,7 @@ export default async function ProjectDetailPage(props: { params: Promise<{ id: s
 
             <div style={{ position: "relative", width: "100%", height: "400px", borderRadius: "1rem", overflow: "hidden", marginBottom: "3rem", backgroundColor: "var(--card-bg)" }}>
                 <Image
-                    src={proj.image || "/placeholder.webp"}
+                    src={withBasePath(proj.image || "/placeholder.webp")}
                     alt={proj.title}
                     fill
                     style={{ objectFit: "cover" }}

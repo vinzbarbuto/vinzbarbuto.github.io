@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/basePath";
+
 export const profile = {
     name: "Vincenzo Barbuto",
     role: "Postdoctoral Researcher",
@@ -43,6 +45,7 @@ export const profile = {
         scholar: "https://scholar.google.com/citations?user=_-riw5YAAAAJ",
         scopus: "https://www.scopus.com/authid/detail.uri?authorId=58788950800",
         email: "mailto:vincenzo.barbuto@unical.it",
-        cv: "/cv/resume.pdf"
+        cv: withBasePath("/cv/resume.pdf")
     }
 };
+

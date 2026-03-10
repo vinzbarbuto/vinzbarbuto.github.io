@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionLayout from "@/components/SectionLayout";
 import { publications } from "@/data/publications";
+import { withBasePath } from "@/lib/basePath";
 import { ExternalLink, FileText, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "../page.module.css";
 
@@ -207,7 +208,7 @@ export default function PublicationsPage() {
                                 {/* Optimized Image Container */}
                                 <div className={styles.previewImageWrapper}>
                                     <Image
-                                        src={pub.image || "/placeholder.webp"}
+                                        src={withBasePath(pub.image || "/placeholder.webp")}
                                         alt={pub.title}
                                         fill
                                         style={{ objectFit: "cover" }}
