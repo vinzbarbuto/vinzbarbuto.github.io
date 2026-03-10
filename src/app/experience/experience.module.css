@@ -125,12 +125,12 @@
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    background: var(--light-border);
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .iconImage {
