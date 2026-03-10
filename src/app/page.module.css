@@ -1,0 +1,817 @@
+/* ==========================================================================
+ * HERO SECTION - FLUID SPATIAL GLASS OVERHAUL (LATE 2024/2025 TRENDS)
+ * ========================================================================== */
+
+.spatialHero {
+  position: relative;
+  min-height: calc(100vh - 4.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+  /* background-color: var(--background); Removed so global fixed background is visible */
+}
+
+/* Force dark mode styling specifically inside the Hero to make the gradients pop, 
+   regardless of the global theme. */
+.spatialHero {
+  --spatial-text: #ffffff;
+  --spatial-subtext: #e4e4e7;
+  /* Brighter subtext for legibility */
+  --spatial-glass-bg: rgba(10, 10, 20, 0.6);
+  /* Slightly darker glass */
+  --spatial-glass-border: rgba(255, 255, 255, 0.15);
+  /* Stronger border contrast */
+  --spatial-glass-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
+  /* Deeper shadow */
+}
+
+
+
+/* Old Fluid Background Classes Removed. Kept empty for structure if needed or fully removed. */
+
+/* --- Container & Grid internal to the open space --- */
+.spatialContainer {
+  position: relative;
+  z-index: 30;
+  /* Above the fluid blobs */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8rem 2rem 4rem 2rem;
+  /* Give it top breathing room for the navbar */
+}
+
+.spatialGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  /* Inverted scale, text section slightly larger */
+  align-items: center;
+  gap: 6rem;
+  /* Increased spacing as requested */
+}
+
+/* --- Text Layer --- */
+.spatialTextLayer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--spatial-text);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* Heavy Localized Glass */
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  width: max-content;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #34d399;
+  /* Brighter neon green center */
+  box-shadow: 0 0 5px #34d399, 0 0 10px #34d399, 0 0 20px #10b981;
+  animation: fluorescentBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes fluorescentBlink {
+  0% {
+    opacity: 1;
+    box-shadow: 0 0 5px #34d399, 0 0 10px #34d399, 0 0 20px #10b981;
+  }
+
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 2px #34d399, 0 0 5px #10b981;
+  }
+
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 5px #34d399, 0 0 10px #34d399, 0 0 20px #10b981;
+  }
+}
+
+.spatialTitle {
+  font-size: clamp(3.5rem, 6vw, 4.5rem);
+  /* Slightly larger */
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  color: var(--spatial-text);
+  /* Very Heavy drop shadow for contrast against fluid blobs */
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.spatialHighlight {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+  /* Boosted gradient and shadow */
+}
+
+.spatialBio {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--spatial-subtext);
+  margin-bottom: 2.5rem;
+  max-width: 90%;
+  font-weight: 400;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+  /* Ensures text stays highly legible */
+}
+
+.spatialBio strong {
+  color: var(--spatial-text);
+  font-weight: 600;
+}
+
+/* --- Actions & Socials --- */
+.spatialActions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.btnSpatialPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* Heavy Localized Glass */
+  background: rgba(255, 255, 255, 0.08);
+  /* Brighter glass for primary CTA */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.9rem 2.2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  width: max-content;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+}
+
+.btnSpatialPrimary:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px -5px rgba(16, 185, 129, 0.3);
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.2);
+  /* Emerald hint shadow */
+}
+
+.spatialSocials {
+  display: flex;
+  gap: 1rem;
+}
+
+.spatialSocials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  /* Localized Class for Socials */
+  background: rgba(20, 20, 30, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--spatial-subtext);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.spatialSocials a:hover {
+  background: rgba(16, 185, 129, 0.2);
+  /* Emerald hover */
+  color: white;
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.3);
+}
+
+/* --- Visual Layer: The Rotating Ring --- */
+.spatialVisualLayer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.rotatingRingWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The SVG Text Ring */
+.rotatingRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  /* Larger than the image */
+  height: 120%;
+  color: rgba(255, 255, 255, 0.9);
+  /* Brighter white text forced */
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+  animation: rotateText 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateText {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* The Profile Circle */
+.spatialProfileCircle {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  /* Removed overflow: hidden so filter drop-shadows can escape the container */
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.spatialProfileCircle:hover {
+  transform: scale(1.05);
+}
+
+.profileCircleImageBase {
+  object-fit: cover;
+  border-radius: 50%;
+  /* Force image itself to be circular */
+  filter: contrast(1.1) brightness(0.9);
+  /* Give the image a cinematic grade */
+}
+
+.profileCircleImageWireframe {
+  object-fit: cover;
+  border-radius: 50%;
+  filter: url(#wireframe-filter) brightness(1.2);
+}
+
+/* Digital rendering scanlines and grid overlay */
+.digitalOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    /* A scrolling scanning bar */
+    linear-gradient(to bottom, transparent 0%, rgba(16, 185, 129, 0.5) 50%, transparent 100%),
+    /* Tiny CRT scanlines */
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(16, 185, 129, 0.2) 2px, rgba(16, 185, 129, 0.2) 4px);
+  background-size: 100% 200%, 100% 100%;
+  animation: digitalScan 3s linear infinite;
+  z-index: 15;
+  mix-blend-mode: screen;
+}
+
+@keyframes digitalScan {
+  0% {
+    background-position: 0 -200%, 0 0;
+  }
+
+  100% {
+    background-position: 0 200%, 0 0;
+  }
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 992px) {
+  .spatialGrid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .spatialTextLayer {
+    align-items: center;
+  }
+
+  .spatialBio {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .spatialActions {
+    align-items: center;
+  }
+
+  .rotatingRingWrapper {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .spatialContainer {
+    padding: 6rem 1rem 3rem 1rem;
+  }
+
+  .spatialTitle {
+    font-size: clamp(2.5rem, 8vw, 3rem);
+  }
+}
+
+/* Removed custom font icons as we are using Lucide */
+
+.greeting {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.title {
+  font-size: 4rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.bio {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--secondary);
+  margin-bottom: 3rem;
+  max-width: 650px;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color var(--transition-speed);
+}
+
+.btnPrimary:hover {
+  background-color: var(--primary-hover);
+  color: white;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--card-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all var(--transition-speed);
+}
+
+.btnSecondary:hover {
+  background-color: var(--card-bg);
+  border-color: var(--primary);
+}
+
+.pubCard {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all var(--transition-speed);
+  display: block;
+}
+
+.pubCard:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.pubTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 4rem;
+}
+
+.interestsList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.interestItem {
+  background-color: var(--selection-bg);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-left: 2px solid var(--card-border);
+  padding-left: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.timelineItem {
+  position: relative;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -1.85rem;
+  top: 0.25rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--primary);
+  border: 2px solid var(--background);
+}
+
+.timelineContent {
+  color: var(--foreground);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.pubAuthors {
+  font-size: 0.95rem;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+
+.pubVenue {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.sectionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.sectionLink:hover {
+  color: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .heroContent {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .heroImageContainer {
+    grid-row: 1;
+    /* Move image to top on mobile */
+    max-width: 250px;
+  }
+
+  .socialRow {
+    justify-content: center;
+  }
+
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+/* ==========================================================================
+ * PREVIEW CARDS (MODULAR DYNAMIC ROUTES LATE 2024/2025 COMPLIANT)
+ * ========================================================================== */
+
+.previewCard {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+  /* Hardware acceleration for smooth scrolling */
+}
+
+.previewCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+  border-color: var(--primary);
+}
+
+.previewImageWrapper {
+  position: relative;
+  width: 250px;
+  min-width: 250px;
+  min-height: 200px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-right: 1px solid var(--card-border);
+}
+
+.previewContent {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.previewTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-space-grotesk);
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+}
+
+.previewCard:hover .previewTitle {
+  color: var(--primary);
+}
+
+.previewMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.previewDesc {
+  font-size: 1rem;
+  color: var(--secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .previewCard {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .previewImageWrapper {
+    width: 100%;
+    min-width: 100%;
+    height: 180px;
+    min-height: 180px;
+    border-right: none;
+    border-bottom: 1px solid var(--card-border);
+  }
+}
+
+/* ==========================================================================
+ * NEW ENHANCEMENTS: MARQUEE & FEATURED PROJECT
+ * ========================================================================== */
+
+/* --- Skills Marquee --- */
+.marqueeContainer {
+  width: 100%;
+  overflow: hidden;
+  padding: 2rem 0;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marqueeTrack {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: scrollMarquee 40s linear infinite;
+  padding-left: 1.5rem;
+  /* Helps with seamless looping math */
+  will-change: transform;
+}
+
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+.marqueeItem {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, background 0.3s ease;
+  white-space: nowrap;
+}
+
+.marqueeItem:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.05) translateY(-2px);
+  background: rgba(16, 185, 129, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3);
+}
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(calc(-50%), 0, 0);
+  }
+
+  /* We double the items, so scrolling by exactly 50% loops it seamlessly */
+}
+
+/* --- Featured Project --- */
+.featuredCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* Push content to bottom */
+  border-radius: 1.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  min-height: 480px;
+  /* Tall, immersive card */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.featuredCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.3);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.featuredImageBackground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featuredCard:hover .featuredImageBackground {
+  transform: scale(1.05);
+  /* Slow zoom effect */
+}
+
+.featuredOverlay {
+  position: absolute;
+  inset: 0;
+  /* Dark bottom gradient fading to a slightly tinted top */
+  background: linear-gradient(to top, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.6) 40%, rgba(10, 10, 15, 0.2) 100%);
+  z-index: 1;
+}
+
+.featuredContent {
+  position: relative;
+  z-index: 2;
+  /* Sit above the image and overlay */
+  padding: 3rem 4rem;
+  /* Generous internal padding */
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .featuredCard {
+    min-height: 400px;
+  }
+
+  .featuredContent {
+    padding: 2rem;
+  }
+}
+
+.featuredBadge {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  /* Move to left to balance */
+  background: rgba(16, 185, 129, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #fff;
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  z-index: 10;
+}

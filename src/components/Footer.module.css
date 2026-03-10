@@ -1,0 +1,85 @@
+.footer {
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    padding: 3rem 0;
+    margin-top: 4rem;
+}
+
+.footerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.socialLinks {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.socialLink {
+    color: var(--secondary);
+    transition: color var(--transition-speed);
+}
+
+.socialLink:hover {
+    color: var(--primary);
+}
+
+.copyright {
+    color: var(--secondary);
+    font-size: 0.875rem;
+}
+
+.copyright a {
+    text-decoration: underline;
+}
+
+.copyright a:hover {
+    text-decoration: none;
+}
+
+/* --- Call to Action --- */
+.ctaContainer {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 1rem 3rem 1rem;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 2rem;
+}
+
+.ctaTitle {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+    font-family: var(--font-space-grotesk);
+}
+
+.ctaSubtitle {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+}
+
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: #fff;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+}
+
+.ctaButton:hover {
+    transform: translateY(-3px);
+    background: var(--primary-hover);
+    box-shadow: 0 15px 35px -5px rgba(16, 185, 129, 0.6);
+    color: #fff;
+}
