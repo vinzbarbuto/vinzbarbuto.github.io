@@ -4,13 +4,16 @@ import { ArrowRight, Download, ChevronRight, MapPin, Calendar } from "lucide-rea
 import styles from "./page.module.css";
 import SectionLayout from "@/components/SectionLayout";
 import HeroVisuals from "@/components/HeroVisuals";
+import ScholarStatsWidget from "@/components/ScholarStatsWidget";
 import { profile } from "@/data/profile";
 import { publications } from "@/data/publications";
+import { projects } from "@/data/projects";
 import { talks } from "@/data/talks";
 import { withBasePath } from "@/lib/basePath";
 
 export default function Home() {
   const recentPublications = publications.slice(0, 3);
+  const featuredProject = projects.find((p) => p.featured) ?? null;
 
   return (
     <>
@@ -112,7 +115,9 @@ export default function Home() {
         <div className={styles.marqueeContainer}>
           <div className={styles.marqueeTrack}>
             {/* Double the list for seamless looping */}
-            {["Next.js", "React", "TypeScript", "Python", "C++", "TensorFlow Lite", "Lingua Franca", "Edge AI", "Digital Twins", "Cyber-Physical Systems", "Next.js", "React", "TypeScript", "Python", "C++", "TensorFlow Lite", "Lingua Franca", "Edge AI", "Digital Twins", "Cyber-Physical Systems"
+            ={[
+              "Next.js", "React", "TypeScript", "Python", "Java", "C++", "TensorFlow Lite", "Lingua Franca", "Edge AI", "Digital Twins", "Cyber-Physical Systems", "Multi Agent Systems", "Angular", "Node Red", "Grafana", "AWS Cloud", "Eclipse Ditto",
+              "Next.js", "React", "TypeScript", "Python", "Java", "C++", "TensorFlow Lite", "Lingua Franca", "Edge AI", "Digital Twins", "Cyber-Physical Systems", "Multi Agent Systems", "Angular", "Node Red", "Grafana", "AWS Cloud", "Eclipse Ditto"
             ].map((tech, idx) => (
               <div key={idx} className={styles.marqueeItem}>
                 {tech}
@@ -122,39 +127,51 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Project */}
-      <SectionLayout
-        id="featured-project"
-        title="Featured Project"
-        subtitle="A deep dive into opportunistic distributed intelligence."
-      >
-        <Link href="/projects/lf-opportunistic-dt" className={styles.featuredCard}>
-          <div className={styles.featuredBadge}>Highlighted</div>
-
-          <div className={styles.featuredImageBackground}>
-            <Image
-              src={withBasePath("/placeholder.webp")}
-              alt="Opportunistic Digital Twins with Lingua Franca"
-              fill
-              style={{ objectFit: "cover", objectPosition: "center" }}
-            />
-            <div className={styles.featuredOverlay} />
-          </div>
-
-          <div className={styles.featuredContent}>
-            <p className={styles.pubAuthors} style={{ marginBottom: "0.5rem", color: "var(--primary)" }}>Digital Twin • Lingua Franca • C++</p>
-            <h3 className={styles.title} style={{ fontSize: "2.2rem", marginBottom: "1rem", color: "#fff" }}>
-              Opportunistic Digital Twins with Lingua Franca
-            </h3>
-            <p className={styles.bio} style={{ marginBottom: "2rem", maxWidth: "80%", color: "rgba(255,255,255,0.8)" }}>
-              Engineering approaches for building dependable and autonomous Opportunistic Digital Twins exploiting the deterministic concurrency and explicit timing semantics of the Lingua Franca coordination language.
-            </p>
-            <div className={styles.sectionLink} style={{ margin: 0, color: "#fff" }}>
-              View Case Study <ArrowRight size={18} />
+      {/* Featured Project — data-driven via projects.ts */}
+      {featuredProject && (
+        <SectionLayout
+          id="featured-project"
+          title="Featured Project"
+          subtitle="A deep dive into one of my key research activities."
+        >
+          <Link href={`/projects/${featuredProject.id}`} className={styles.featuredCard}>
+            {/* Left/Top Content Area */}
+            <div className={styles.featuredContent}>
+              <div className={styles.featuredBadge}>Highlighted</div>
+              <div className={styles.featuredTextInner}>
+                <p className={styles.pubAuthors} style={{ marginBottom: "0.5rem", color: "var(--primary)" }}>
+                  {featuredProject.featuredSubtitle ?? featuredProject.tags.join(" · ")}
+                </p>
+                <h3 className={styles.title} style={{ fontSize: "2.2rem", marginBottom: "1rem", color: "#fff" }}>
+                  {featuredProject.title}
+                </h3>
+                <p className={styles.bio} style={{ marginBottom: "2rem", color: "rgba(255,255,255,0.8)", maxWidth: "95%" }}>
+                  {featuredProject.featuredBlurb ?? featuredProject.description}
+                </p>
+                <div className={styles.sectionLink} style={{ margin: 0, color: "var(--primary)" }}>
+                  View Case Study <ArrowRight size={18} />
+                </div>
+              </div>
             </div>
-          </div>
-        </Link>
-      </SectionLayout>
+
+            {/* Right/Bottom Visual Area */}
+            <div className={styles.featuredVisual} style={featuredProject.isLogo ? { backgroundColor: 'white', padding: '3rem' } : undefined}>
+              <Image
+                src={withBasePath(featuredProject.image || "/placeholder.webp")}
+                alt={featuredProject.title}
+                fill
+                style={{
+                  objectFit: featuredProject.isLogo ? "contain" : "cover",
+                  objectPosition: "center"
+                }}
+                className={styles.featuredImageEffect}
+              />
+              {!featuredProject.isLogo && <div className={styles.featuredVisualOverlay} />}
+            </div>
+          </Link>
+        </SectionLayout>
+      )}
+
 
       {/* Recent Publications Section */}
       <SectionLayout
@@ -163,6 +180,10 @@ export default function Home() {
         subtitle="My latest research on Edge AI and Digital Twins."
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+
+          {/* Scholar impact summary */}
+          <ScholarStatsWidget variant="cards" />
+
           {recentPublications.map((pub) => (
             <Link href={`/publications/${pub.id}`} key={pub.id} className={styles.previewCard}>
               <div className={styles.previewImageWrapper}>
@@ -216,12 +237,15 @@ export default function Home() {
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
           {talks.slice(0, 2).map((talk) => (
             <Link href={`/talks/${talk.id}`} key={talk.id} className={styles.previewCard}>
-              <div className={styles.previewImageWrapper}>
+              <div className={styles.previewImageWrapper} style={talk.isLogo ? { backgroundColor: 'white' } : undefined}>
                 <Image
                   src={withBasePath(talk.image || "/placeholder.webp")}
                   alt={talk.title}
                   fill
-                  style={{ objectFit: "cover" }}
+                  style={{
+                    objectFit: talk.isLogo ? "contain" : "cover",
+                    padding: talk.isLogo ? "1.5rem" : "0"
+                  }}
                 />
               </div>
 

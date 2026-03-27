@@ -601,11 +601,14 @@
 
 .previewImageWrapper {
   position: relative;
-  width: 250px;
-  min-width: 250px;
-  min-height: 200px;
-  background-color: rgba(0, 0, 0, 0.2);
+  width: 260px;
+  min-width: 260px;
+  min-height: 180px;
+  align-self: stretch;
+  flex-shrink: 0;
+  background-color: var(--card-bg);
   border-right: 1px solid var(--card-border);
+  overflow: hidden;
 }
 
 .previewContent {
@@ -660,11 +663,56 @@
   .previewImageWrapper {
     width: 100%;
     min-width: 100%;
-    height: 180px;
-    min-height: 180px;
+    height: 220px;
     border-right: none;
     border-bottom: 1px solid var(--card-border);
   }
+}
+
+/* Logo image inner wrapper — used inside previewImageWrapper for logo-type images */
+.logoImageInner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ==========================================================================
+ * TALK DETAIL PAGE - HERO IMAGE
+ * ========================================================================== */
+
+.talkDetailHero {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* For photo-style images: taller, full-bleed */
+.talkDetailHeroInner {
+  position: relative;
+  width: 100%;
+  height: 380px;
+}
+
+/* For logo-style images: compact, padded, centered */
+.talkDetailHeroLogo {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 3rem;
 }
 
 /* ==========================================================================
@@ -731,87 +779,104 @@
   /* We double the items, so scrolling by exactly 50% loops it seamlessly */
 }
 
-/* --- Featured Project --- */
+/* --- Featured Project (Premium Split Layout) --- */
 .featuredCard {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  /* Push content to bottom */
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: stretch;
   border-radius: 1.5rem;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 2rem;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  min-height: 480px;
-  /* Tall, immersive card */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 440px;
 }
 
 .featuredCard:hover {
   transform: translateY(-6px);
-  box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
   border-color: rgba(16, 185, 129, 0.4);
 }
 
-.featuredImageBackground {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.featuredCard:hover .featuredImageBackground {
+.featuredCard:hover .featuredImageEffect {
   transform: scale(1.05);
-  /* Slow zoom effect */
-}
-
-.featuredOverlay {
-  position: absolute;
-  inset: 0;
-  /* Dark bottom gradient fading to a slightly tinted top */
-  background: linear-gradient(to top, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.6) 40%, rgba(10, 10, 15, 0.2) 100%);
-  z-index: 1;
 }
 
 .featuredContent {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5rem 4rem;
   z-index: 2;
-  /* Sit above the image and overlay */
-  padding: 3rem 4rem;
-  /* Generous internal padding */
-  width: 100%;
-}
-
-@media (max-width: 992px) {
-  .featuredCard {
-    min-height: 400px;
-  }
-
-  .featuredContent {
-    padding: 2rem;
-  }
 }
 
 .featuredBadge {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  /* Move to left to balance */
-  background: rgba(16, 185, 129, 0.2);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: var(--primary);
   padding: 0.4rem 1.2rem;
   border-radius: 9999px;
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  z-index: 10;
+  margin-bottom: 2rem;
+}
+
+.featuredTextInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.featuredVisual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--card-bg);
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featuredImageEffect {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.featuredVisualOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--card-bg) 0%, rgba(10, 10, 15, 0) 15%);
+  z-index: 1;
+}
+
+@media (max-width: 992px) {
+  .featuredCard {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  
+  .featuredVisual {
+    grid-row: 1; /* Image on top on mobile */
+    min-height: 250px;
+  }
+  
+  .featuredVisualOverlay {
+    background: linear-gradient(to bottom, transparent 0%, var(--card-bg) 100%);
+  }
+
+  .featuredContent {
+    padding: 2.5rem;
+  }
 }

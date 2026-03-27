@@ -6,8 +6,10 @@ import Link from "next/link";
 import SectionLayout from "@/components/SectionLayout";
 import { publications } from "@/data/publications";
 import { withBasePath } from "@/lib/basePath";
-import { ExternalLink, FileText, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "../page.module.css";
+import ScholarStatsWidget from "@/components/ScholarStatsWidget";
+import CiteButton from "@/components/CiteButton";
 
 export default function PublicationsPage() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -17,12 +19,10 @@ export default function PublicationsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
 
-    // Reset pagination when filters, sort, or items per page change
     useEffect(() => {
         setCurrentPage(1);
     }, [searchTerm, selectedType, selectedYear, sortOrder, itemsPerPage]);
 
-    // Extract unique publication types and years
     const publicationTypes = ["All", ...Array.from(new Set(publications.map(pub => pub.type)))];
     const publicationYears = ["All", ...Array.from(new Set(publications.map(pub => pub.year.toString()))).sort((a, b) => Number(b) - Number(a))];
 
@@ -32,31 +32,34 @@ export default function PublicationsPage() {
             pub.authors.toLowerCase().includes(searchTerm.toLowerCase()) ||
             pub.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
             pub.abstract.toLowerCase().includes(searchTerm.toLowerCase());
-
         const matchesType = selectedType === "All" || pub.type === selectedType;
         const matchesYear = selectedYear === "All" || pub.year.toString() === selectedYear;
-
         return matchesSearch && matchesType && matchesYear;
     });
 
-    // Apply Sorting
     const sortedPublications = [...filteredPublications].sort((a, b) => {
-        if (sortOrder === "year_desc") {
-            return b.year - a.year; // Newest to oldest
-        } else if (sortOrder === "year_asc") {
-            return a.year - b.year; // Oldest to newest
-        } else if (sortOrder === "title_asc") {
-            return a.title.localeCompare(b.title); // A to Z
-        } else if (sortOrder === "title_desc") {
-            return b.title.localeCompare(a.title); // Z to A
-        }
+        if (sortOrder === "year_desc") return b.year - a.year;
+        if (sortOrder === "year_asc") return a.year - b.year;
+        if (sortOrder === "title_asc") return a.title.localeCompare(b.title);
+        if (sortOrder === "title_desc") return b.title.localeCompare(a.title);
         return 0;
     });
 
-    // Pagination calculations
     const totalPages = Math.ceil(sortedPublications.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentPublications = sortedPublications.slice(startIndex, startIndex + itemsPerPage);
+
+    const selectStyle = {
+        padding: "0.4rem 0.75rem",
+        borderRadius: "0.6rem",
+        border: "1px solid var(--card-border)",
+        backgroundColor: "var(--card-bg)",
+        color: "var(--foreground)",
+        fontSize: "0.875rem",
+        fontWeight: "500",
+        outline: "none",
+        cursor: "pointer"
+    } as const;
 
     return (
         <SectionLayout
@@ -64,7 +67,8 @@ export default function PublicationsPage() {
             subtitle="Complete list of my research papers, journal articles, and conference proceedings."
         >
             <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-                {/* Global Controls Area */}
+                <ScholarStatsWidget variant="bar" />
+
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                     {/* Search Bar */}
                     <div style={{ position: "relative", width: "100%" }}>
@@ -89,7 +93,7 @@ export default function PublicationsPage() {
 
                     {/* Filter Bar */}
                     <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1.5rem", padding: "0.5rem 0" }}>
-                        {/* Type Filter */}
+                        {/* Type Filter Pills */}
                         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.75rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--secondary)" }}>
                                 <Filter size={18} />
@@ -118,79 +122,26 @@ export default function PublicationsPage() {
                             </div>
                         </div>
 
-                        {/* Secondary Dropdowns Group */}
-                        <div style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            alignItems: "center",
-                            gap: "1rem",
-                            marginLeft: "auto",
-                            width: "auto"
-                        }}>
+                        {/* Dropdowns */}
+                        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem", marginLeft: "auto" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                                 <span style={{ fontSize: "0.9rem", fontWeight: "600", color: "var(--secondary)" }}>Year:</span>
-                                <select
-                                    value={selectedYear}
-                                    onChange={(e) => setSelectedYear(e.target.value)}
-                                    style={{
-                                        padding: "0.4rem 0.75rem",
-                                        borderRadius: "0.6rem",
-                                        border: "1px solid var(--card-border)",
-                                        backgroundColor: "var(--card-bg)",
-                                        color: "var(--foreground)",
-                                        fontSize: "0.875rem",
-                                        fontWeight: "500",
-                                        outline: "none",
-                                        cursor: "pointer"
-                                    }}
-                                >
-                                    {publicationYears.map(year => (
-                                        <option key={year} value={year}>{year}</option>
-                                    ))}
+                                <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} style={selectStyle}>
+                                    {publicationYears.map(year => <option key={year} value={year}>{year}</option>)}
                                 </select>
                             </div>
-
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                                 <span style={{ fontSize: "0.9rem", fontWeight: "600", color: "var(--secondary)" }}>Sort:</span>
-                                <select
-                                    value={sortOrder}
-                                    onChange={(e) => setSortOrder(e.target.value)}
-                                    style={{
-                                        padding: "0.4rem 0.75rem",
-                                        borderRadius: "0.6rem",
-                                        border: "1px solid var(--card-border)",
-                                        backgroundColor: "var(--card-bg)",
-                                        color: "var(--foreground)",
-                                        fontSize: "0.875rem",
-                                        fontWeight: "500",
-                                        outline: "none",
-                                        cursor: "pointer"
-                                    }}
-                                >
+                                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} style={selectStyle}>
                                     <option value="year_desc">Newest</option>
                                     <option value="year_asc">Oldest</option>
                                     <option value="title_asc">A-Z</option>
                                     <option value="title_desc">Z-A</option>
                                 </select>
                             </div>
-
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                                 <span style={{ fontSize: "0.9rem", fontWeight: "600", color: "var(--secondary)" }}>Per page:</span>
-                                <select
-                                    value={itemsPerPage}
-                                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                                    style={{
-                                        padding: "0.4rem 0.75rem",
-                                        borderRadius: "0.6rem",
-                                        border: "1px solid var(--card-border)",
-                                        backgroundColor: "var(--card-bg)",
-                                        color: "var(--foreground)",
-                                        fontSize: "0.875rem",
-                                        fontWeight: "500",
-                                        outline: "none",
-                                        cursor: "pointer"
-                                    }}
-                                >
+                                <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))} style={selectStyle}>
                                     <option value={5}>5</option>
                                     <option value={10}>10</option>
                                     <option value={20}>20</option>
@@ -200,45 +151,33 @@ export default function PublicationsPage() {
                     </div>
                 </div>
 
-                {/* Main List Area */}
+                {/* Results List */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                     {currentPublications.length > 0 ? (
                         currentPublications.map((pub) => (
                             <Link href={`/publications/${pub.id}`} key={pub.id} className={styles.previewCard}>
-                                {/* Optimized Image Container */}
                                 <div className={styles.previewImageWrapper}>
-                                    <Image
-                                        src={withBasePath(pub.image || "/placeholder.webp")}
-                                        alt={pub.title}
-                                        fill
-                                        style={{ objectFit: "cover" }}
-                                    />
+                                    <Image src={withBasePath(pub.image || "/placeholder.webp")} alt={pub.title} fill style={{ objectFit: "cover" }} />
                                 </div>
-
-                                {/* Content Container */}
                                 <div className={styles.previewContent}>
                                     <h3 className={styles.previewTitle}>{pub.title}</h3>
-
                                     <div className={styles.previewMeta}>
-                                        <span style={{ color: "var(--foreground)" }}>
-                                            {pub.type}
-                                        </span>
+                                        <span style={{ color: "var(--foreground)" }}>{pub.type}</span>
                                         <span>•</span>
                                         <span>{pub.venue}</span>
                                         <span>•</span>
                                         <span>{pub.year}</span>
                                     </div>
-
-                                    <p className={styles.previewDesc}>
-                                        {pub.abstract}
-                                    </p>
-
-                                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "auto", paddingTop: "1rem" }}>
-                                        {pub.tags.map(tag => (
-                                            <span key={tag} className={styles.interestItem} style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", margin: 0 }}>
-                                                {tag}
-                                            </span>
-                                        ))}
+                                    <p className={styles.previewDesc}>{pub.abstract}</p>
+                                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", marginTop: "auto", paddingTop: "1rem" }}>
+                                        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                                            {pub.tags.map(tag => (
+                                                <span key={tag} className={styles.interestItem} style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", margin: 0 }}>
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <CiteButton bibtex={pub.bibtex} />
                                     </div>
                                 </div>
                             </Link>
@@ -257,52 +196,33 @@ export default function PublicationsPage() {
 
                     {/* Pagination Footer */}
                     {totalPages > 1 && (
-                        <div style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: "1.5rem",
-                            paddingTop: "2.5rem",
-                            borderTop: "1px solid var(--card-border)"
-                        }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1.5rem", paddingTop: "2.5rem", borderTop: "1px solid var(--card-border)" }}>
                             <button
                                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
                                 style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "0.5rem",
-                                    padding: "0.6rem 1.2rem",
-                                    borderRadius: "0.75rem",
+                                    display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1.2rem", borderRadius: "0.75rem",
                                     backgroundColor: currentPage === 1 ? "transparent" : "var(--card-bg)",
                                     color: currentPage === 1 ? "var(--secondary)" : "var(--foreground)",
                                     border: `1px solid ${currentPage === 1 ? "transparent" : "var(--card-border)"}`,
-                                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
-                                    transition: "all 0.2s ease"
+                                    cursor: currentPage === 1 ? "not-allowed" : "pointer", transition: "all 0.2s ease"
                                 }}
                             >
                                 <ChevronLeft size={18} />
                                 <span style={{ fontWeight: 600 }}>Previous</span>
                             </button>
-
                             <span style={{ color: "var(--secondary)", fontSize: "0.9rem", fontWeight: "500" }}>
                                 Page <span style={{ color: "var(--foreground)", fontWeight: "700" }}>{currentPage}</span> of <span style={{ color: "var(--foreground)", fontWeight: "700" }}>{totalPages}</span>
                             </span>
-
                             <button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
                                 style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "0.5rem",
-                                    padding: "0.6rem 1.2rem",
-                                    borderRadius: "0.75rem",
+                                    display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1.2rem", borderRadius: "0.75rem",
                                     backgroundColor: currentPage === totalPages ? "transparent" : "var(--card-bg)",
                                     color: currentPage === totalPages ? "var(--secondary)" : "var(--foreground)",
                                     border: `1px solid ${currentPage === totalPages ? "transparent" : "var(--card-border)"}`,
-                                    cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-                                    transition: "all 0.2s ease"
+                                    cursor: currentPage === totalPages ? "not-allowed" : "pointer", transition: "all 0.2s ease"
                                 }}
                             >
                                 <span style={{ fontWeight: 600 }}>Next</span>

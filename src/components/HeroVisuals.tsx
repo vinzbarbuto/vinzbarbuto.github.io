@@ -89,7 +89,7 @@ export default function HeroVisuals() {
 
                     {/* The Base Real Image */}
                     <Image
-                        src={withBasePath("/images/profile.webp")}
+                        src={withBasePath("https://res.cloudinary.com/dgec2pai8/image/upload/v1774537873/profile_oioxa3.webp")}
                         alt={profile.name}
                         fill
                         sizes="(max-width: 768px) 150px, 300px"
@@ -108,7 +108,7 @@ export default function HeroVisuals() {
                         }}
                     >
                         <Image
-                            src={withBasePath("/images/profile.webp")}
+                            src={withBasePath("https://res.cloudinary.com/dgec2pai8/image/upload/v1774537873/profile_oioxa3.webp")}
                             alt={profile.name}
                             fill
                             sizes="(max-width: 768px) 150px, 300px"

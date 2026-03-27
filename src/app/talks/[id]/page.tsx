@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, MapPin } from "lucide-react";
 import { talks } from "@/data/talks";
 import { withBasePath } from "@/lib/basePath";
+import styles from "../../page.module.css";
 
 export function generateStaticParams() {
     return talks.map((talk) => ({
@@ -25,14 +26,31 @@ export default async function TalkDetailPage(props: { params: Promise<{ id: stri
                 <ArrowLeft size={16} /> Back to Talks
             </Link>
 
-            <div style={{ position: "relative", width: "100%", height: "400px", borderRadius: "1rem", overflow: "hidden", marginBottom: "3rem", backgroundColor: "var(--card-bg)" }}>
-                <Image
-                    src={withBasePath(talk.image || "/placeholder.webp")}
-                    alt={talk.title}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                />
+            <div className={styles.talkDetailHero}>
+                {talk.isLogo ? (
+                    /* Logo: compact centered, no fill */
+                    <div className={styles.talkDetailHeroLogo}>
+                        <Image
+                            src={withBasePath(talk.image || "/placeholder.webp")}
+                            alt={talk.title}
+                            width={500}
+                            height={180}
+                            style={{ objectFit: "contain", width: "100%", height: "100%", maxHeight: "180px" }}
+                            priority
+                        />
+                    </div>
+                ) : (
+                    /* Photo: full-bleed cover */
+                    <div className={styles.talkDetailHeroInner}>
+                        <Image
+                            src={withBasePath(talk.image || "/placeholder.webp")}
+                            alt={talk.title}
+                            fill
+                            style={{ objectFit: "cover", objectPosition: "center" }}
+                            priority
+                        />
+                    </div>
+                )}
             </div>
 
             <h1 style={{ fontSize: "2.5rem", fontWeight: "700", fontFamily: "var(--font-space-grotesk)", color: "var(--foreground)", marginBottom: "1.5rem", lineHeight: "1.2" }}>
