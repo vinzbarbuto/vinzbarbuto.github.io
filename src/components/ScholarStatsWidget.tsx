@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { BookOpen, BarChart2, TrendingUp, RefreshCw, ExternalLink } from "lucide-react";
-import { withBasePath } from "@/lib/basePath";
 import type { ScholarStats } from "@/data/scholarStats";
-import { EMPTY_SCHOLAR_STATS } from "@/data/scholarStats";
+import _scholarData from "../../public/scholar-stats.json";
+
+const stats = _scholarData as ScholarStats;
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Variants
@@ -21,16 +21,6 @@ export default function ScholarStatsWidget({
     variant = "cards",
     scholarUrl = "https://scholar.google.com/citations?user=_-riw5YAAAAJ",
 }: ScholarStatsWidgetProps) {
-    const [stats, setStats] = useState<ScholarStats>(EMPTY_SCHOLAR_STATS);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetch(withBasePath("/scholar-stats.json"))
-            .then(res => res.ok ? res.json() : null)
-            .then((data: ScholarStats | null) => { if (data) setStats(data); })
-            .catch(() => { })
-            .finally(() => setLoading(false));
-    }, []);
 
     const formattedDate = stats.updated_at
         ? new Date(stats.updated_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })
@@ -39,11 +29,7 @@ export default function ScholarStatsWidget({
     const hasStats = stats.citations !== null || stats.hindex !== null;
 
     /* ── Shared shimmer keyframes injected once ── */
-    const shimmerStyle = `
-        @keyframes shimmer {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+    const animStyle = `
         @keyframes countUp {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0);   }
@@ -54,20 +40,10 @@ export default function ScholarStatsWidget({
        VARIANT: "bar" — slim horizontal strip (Publications page)
     ───────────────────────────────────────────────────────────── */
     if (variant === "bar") {
-        if (loading) {
-            return (
-                <div style={{ display: "flex", gap: "0.75rem", padding: "1rem 1.5rem", borderRadius: "0.875rem", border: "1px solid var(--card-border)", backgroundColor: "var(--card-bg)" }}>
-                    <style>{shimmerStyle}</style>
-                    {[140, 90, 90, 90].map((w, i) => (
-                        <div key={i} style={{ height: "38px", width: `${w}px`, borderRadius: "0.5rem", background: "linear-gradient(90deg,rgba(255,255,255,0.04) 25%,rgba(255,255,255,0.09) 50%,rgba(255,255,255,0.04) 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.5s infinite" }} />
-                    ))}
-                </div>
-            );
-        }
         if (!hasStats) return null;
         return (
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", padding: "1rem 1.5rem", borderRadius: "0.875rem", border: "1px solid rgba(16,185,129,0.25)", background: "linear-gradient(135deg,rgba(16,185,129,0.07) 0%,rgba(16,185,129,0.02) 100%)", backdropFilter: "blur(10px)", alignItems: "center" }}>
-                <style>{shimmerStyle}</style>
+                <style>{animStyle}</style>
 
                 {/* Brand */}
                 <a href={scholarUrl} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none", marginRight: "0.25rem" }}>
@@ -108,6 +84,8 @@ export default function ScholarStatsWidget({
     /* ─────────────────────────────────────────────────────────────
        VARIANT: "cards" — 3 large metric cards (Homepage)
     ───────────────────────────────────────────────────────────── */
+    if (!hasStats) return null;
+    
     const metrics = [
         {
             label: "Citations",
@@ -140,7 +118,7 @@ export default function ScholarStatsWidget({
 
     return (
         <div>
-            <style>{shimmerStyle}</style>
+            <style>{animStyle}</style>
 
             {/* Header row */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
@@ -149,7 +127,7 @@ export default function ScholarStatsWidget({
                     <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--primary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Google Scholar</span>
                     <ExternalLink size={11} style={{ color: "var(--primary)", opacity: 0.7 }} />
                 </a>
-                {!loading && formattedDate && (
+                {formattedDate && (
                     <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", color: "var(--secondary)" }}>
                         <RefreshCw size={10} />
                         <span style={{ fontSize: "0.72rem", fontWeight: 500 }}>Updated {formattedDate}</span>
@@ -159,35 +137,28 @@ export default function ScholarStatsWidget({
 
             {/* Metric cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.85rem" }}>
-                {loading
-                    ? [1, 2, 3].map(i => (
-                        <div key={i} style={{ height: "90px", borderRadius: "0.875rem", background: "linear-gradient(90deg,rgba(255,255,255,0.04) 25%,rgba(255,255,255,0.09) 50%,rgba(255,255,255,0.04) 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.5s infinite" }} />
-                    ))
-                    : metrics.map(({ label, value, sub, icon, gradient, border, glow }) => (
-                        <div key={label} style={{ position: "relative", padding: "1.1rem 1rem", borderRadius: "0.875rem", background: gradient, border: `1px solid ${border}`, overflow: "hidden", boxShadow: `0 0 20px ${glow}`, transition: "transform 0.2s ease, box-shadow 0.2s ease" }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px ${glow}`; }}
-                            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 20px ${glow}`; }}>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-                                <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "var(--secondary)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</span>
-                                <span style={{ color: "var(--secondary)", opacity: 0.7 }}>{icon}</span>
-                            </div>
-                            <div style={{ fontSize: "2rem", fontWeight: 800, color: "var(--foreground)", letterSpacing: "-0.03em", lineHeight: 1, animation: "countUp 0.5s ease forwards" }}>
-                                {value}
-                            </div>
-                            <div style={{ fontSize: "0.7rem", color: "var(--secondary)", marginTop: "0.35rem", opacity: 0.75 }}>{sub}</div>
+                {metrics.map(({ label, value, sub, icon, gradient, border, glow }) => (
+                    <div key={label} style={{ position: "relative", padding: "1.1rem 1rem", borderRadius: "0.875rem", background: gradient, border: `1px solid ${border}`, overflow: "hidden", boxShadow: `0 0 20px ${glow}`, transition: "transform 0.2s ease, box-shadow 0.2s ease" }}
+                        onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px ${glow}`; }}
+                        onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 20px ${glow}`; }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
+                            <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "var(--secondary)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</span>
+                            <span style={{ color: "var(--secondary)", opacity: 0.7 }}>{icon}</span>
                         </div>
-                    ))
-                }
+                        <div style={{ fontSize: "2rem", fontWeight: 800, color: "var(--foreground)", letterSpacing: "-0.03em", lineHeight: 1, animation: "countUp 0.5s ease forwards" }}>
+                            {value}
+                        </div>
+                        <div style={{ fontSize: "0.7rem", color: "var(--secondary)", marginTop: "0.35rem", opacity: 0.75 }}>{sub}</div>
+                    </div>
+                ))}
             </div>
 
             {/* Full profile link */}
-            {!loading && (
-                <div style={{ marginTop: "0.85rem", textAlign: "right" }}>
-                    <Link href="/publications" style={{ fontSize: "0.78rem", color: "var(--primary)", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
-                        View all publications →
-                    </Link>
-                </div>
-            )}
+            <div style={{ marginTop: "0.85rem", textAlign: "right" }}>
+                <Link href="/publications" style={{ fontSize: "0.78rem", color: "var(--primary)", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                    View all publications →
+                </Link>
+            </div>
         </div>
     );
 }
