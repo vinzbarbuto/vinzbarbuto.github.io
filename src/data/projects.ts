@@ -7,7 +7,7 @@ export const projects = [
         isLogo: true,
         tags: ["Cardio-Oncology", "Artificial Intelligence", "Precision Medicine"],
         period: "2026 - Present",
-        link: "",
+        link: "https://compass-care.eu/",
         featured: true,
         featuredSubtitle: "Cardio-Oncology · AI · Precision Medicine",
         featuredBlurb: "Advancing precision cardio-oncology care across Europe through a public-private partnership. The project leverages AI, advanced imaging, and multi-omics to improve early detection and prediction of cardiotoxicity in cancer survivors.",
