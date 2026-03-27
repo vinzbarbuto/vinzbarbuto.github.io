@@ -36,6 +36,7 @@ jobs:
         # We use `continue-on-error` so the workflow doesn't fail noisily —
         # it simply skips the commit step and retains the previous JSON.
         continue-on-error: true
+        timeout-minutes: 3
         run: python scripts/fetch_scholar.py
 
       # ── 5. Commit & push if the JSON changed ─────────────────────────────
