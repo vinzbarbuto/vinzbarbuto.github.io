@@ -2,7 +2,7 @@ import { withBasePath } from "@/lib/basePath";
 
 export const profile = {
     name: "Vincenzo Barbuto",
-    role: "Postdoctoral Researcher",
+    role: "Research Fellow",
     institution: "DIMES, University of Calabria, Italy",
     email: "vincenzo.barbuto@unical.it",
     bio: "My research focuses on Edge Intelligence, an emerging field at the intersection of artificial intelligence (AI), the Internet of Things (IoT), and edge computing. Specifically, I investigate intelligent devices and systems capable of processing data locally, reducing reliance on cloud-based services. My goal is to understand how these devices can seamlessly integrate into complex cyber-physical systems, ranging from intelligent traffic monitoring to emergency vehicle detection. Beyond Edge Intelligence, I am also interested in Digital Twins, digital counterparts of physical systems.",

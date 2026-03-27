@@ -17,8 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Vincenzo Barbuto | Postdoctoral Researcher",
-  description: "Personal academic website of Vincenzo Barbuto, Postdoctoral Researcher in Edge AI & Cyber-Physical Systems.",
+  title: "Vincenzo Barbuto | Research Fellow",
+  description: "Personal academic website of Vincenzo Barbuto, Research Fellow in Edge AI & Cyber-Physical Systems.",
 };
 
 export default function RootLayout({

@@ -35,7 +35,7 @@ export const experience = {
     ],
     work: [
         {
-            role: "Postdoctoral Researcher",
+            role: "Research Fellow",
             institution: "University of Calabria, Rende, Italy",
             period: "November 2025 - Present",
             description: "Research addresses the challenge of maintaining systemic coherence in heterogeneous mobile systems, investigating autonomic 'self-*' properties at the Edge and designing lightweight protocols.",

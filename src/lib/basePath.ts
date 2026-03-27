@@ -8,8 +8,7 @@
  * In development (npm run dev), BASE_PATH is "", so paths are unchanged.
  * In production (npm run build), BASE_PATH is the repository subpath.
  */
-export const BASE_PATH =
-    process.env.NODE_ENV === "production" ? "/vincenzo-barbuto.github.io" : "";
+export const BASE_PATH = "";
 
 /**
  * Prepend the basePath to any internal public asset path.
