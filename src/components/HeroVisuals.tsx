@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import styles from "../app/page.module.css";
 import { profile } from "@/data/profile";
@@ -9,6 +9,16 @@ import { withBasePath } from "@/lib/basePath";
 
 export default function HeroVisuals() {
     const [isHovered, setIsHovered] = useState(false);
+    const [hoverCapable, setHoverCapable] = useState(true);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const mq = window.matchMedia("(hover: hover)");
+        const update = () => setHoverCapable(mq.matches);
+        update();
+        mq.addEventListener?.("change", update);
+        return () => mq.removeEventListener?.("change", update);
+    }, []);
 
     // Mouse tracking for the digital twin wireframe mask
     const imageMouseX = useMotionValue(0);
@@ -58,13 +68,13 @@ export default function HeroVisuals() {
                 {/* Inner Perfect Circle Profile (Static Base with Interactive Mask) */}
                 <motion.div
                     className={styles.spatialProfileCircle}
-                    onMouseMove={(e) => {
+                    onMouseMove={hoverCapable ? (e) => {
                         const rect = e.currentTarget.getBoundingClientRect();
                         imageMouseX.set(e.clientX - rect.left);
                         imageMouseY.set(e.clientY - rect.top);
-                    }}
-                    onMouseEnter={() => maskRadius.set(120)}
-                    onMouseLeave={() => maskRadius.set(0)}
+                    } : undefined}
+                    onMouseEnter={hoverCapable ? () => maskRadius.set(120) : undefined}
+                    onMouseLeave={hoverCapable ? () => maskRadius.set(0) : undefined}
                 >
                     {/* Expanding Aura Effect (Replaces the mouse spotlight) */}
                     <motion.div

@@ -37,19 +37,17 @@
   z-index: 30;
   /* Above the fluid blobs */
   width: 100%;
-  max-width: 1200px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 8rem 2rem 4rem 2rem;
-  /* Give it top breathing room for the navbar */
+  padding: clamp(5rem, 10vw, 9rem) 1.25rem 3rem;
 }
 
 .spatialGrid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  /* Inverted scale, text section slightly larger */
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
   align-items: center;
-  gap: 6rem;
-  /* Increased spacing as requested */
+  gap: clamp(2rem, 4vw, 5rem);
+  max-width: 1120px;
 }
 
 /* --- Text Layer --- */
@@ -58,6 +56,33 @@
   flex-direction: column;
   justify-content: center;
   color: var(--spatial-text);
+}
+
+.heroEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: var(--sp-4);
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: fluorescentBlink 1.5s ease-in-out infinite;
+}
+
+.revealWord {
+  display: inline-block;
+  overflow: hidden;
+  white-space: pre;
 }
 
 .statusPill {
@@ -287,7 +312,7 @@
   filter: url(#wireframe-filter) brightness(1.2);
 }
 
-/* Digital rendering scanlines and grid overlay */
+/* Digital rendering scanlines and grid overlay — hover-only for subtlety */
 .digitalOverlay {
   position: absolute;
   inset: 0;
@@ -300,8 +325,16 @@
     repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(16, 185, 129, 0.2) 2px, rgba(16, 185, 129, 0.2) 4px);
   background-size: 100% 200%, 100% 100%;
   animation: digitalScan 3s linear infinite;
+  animation-play-state: paused;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-std);
   z-index: 15;
   mix-blend-mode: screen;
+}
+
+.spatialProfileCircle:hover .digitalOverlay {
+  opacity: 1;
+  animation-play-state: running;
 }
 
 @keyframes digitalScan {
@@ -340,15 +373,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .spatialContainer {
-    padding: 6rem 1rem 3rem 1rem;
-  }
-
-  .spatialTitle {
-    font-size: clamp(2.5rem, 8vw, 3rem);
-  }
-}
 
 /* Removed custom font icons as we are using Lucide */
 
@@ -495,25 +519,6 @@
   color: var(--foreground);
 }
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 2.5rem;
-  }
-
-  .subtitle {
-    font-size: 1.25rem;
-  }
-
-  .actions {
-    flex-direction: column;
-  }
-
-  .aboutGrid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-}
-
 .pubAuthors {
   font-size: 0.95rem;
   color: var(--secondary);
@@ -540,6 +545,14 @@
 }
 
 @media (max-width: 768px) {
+  .spatialContainer {
+    padding: clamp(5rem, 10vw, 9rem) 1.25rem 3rem;
+  }
+
+  .spatialTitle {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
   .title {
     font-size: 2.5rem;
   }
@@ -579,18 +592,40 @@
  * ========================================================================== */
 
 .previewCard {
+  position: relative;
+  isolation: isolate;
+  --spot-x: 50%;
+  --spot-y: -20%;
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, box-shadow;
-  /* Hardware acceleration for smooth scrolling */
+  transition:
+    transform var(--dur-med) var(--ease-std),
+    box-shadow var(--dur-med) var(--ease-std),
+    border-color var(--dur-med) var(--ease-std);
+}
+
+.previewCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(600px circle at var(--spot-x) var(--spot-y),
+      rgba(16, 185, 129, 0.18), transparent 40%);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-std);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.previewCard:hover::before {
+  opacity: 1;
 }
 
 .previewCard:hover {
@@ -601,6 +636,7 @@
 
 .previewImageWrapper {
   position: relative;
+  z-index: 1;
   width: 260px;
   min-width: 260px;
   min-height: 180px;
@@ -612,6 +648,8 @@
 }
 
 .previewContent {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -782,19 +820,42 @@
 /* --- Featured Project (Premium Split Layout) --- */
 .featuredCard {
   position: relative;
+  isolation: isolate;
+  --spot-x: 50%;
+  --spot-y: -20%;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   align-items: stretch;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   margin-bottom: 2rem;
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-2);
+  transition:
+    transform var(--dur-slow) var(--ease-std),
+    box-shadow var(--dur-slow) var(--ease-std),
+    border-color var(--dur-slow) var(--ease-std);
   min-height: 440px;
+}
+
+.featuredCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(700px circle at var(--spot-x) var(--spot-y),
+      rgba(16, 185, 129, 0.22), transparent 45%);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-std);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.featuredCard:hover::before {
+  opacity: 1;
 }
 
 .featuredCard:hover {
@@ -866,12 +927,13 @@
     grid-template-columns: 1fr;
     min-height: auto;
   }
-  
+
   .featuredVisual {
-    grid-row: 1; /* Image on top on mobile */
+    grid-row: 1;
+    /* Image on top on mobile */
     min-height: 250px;
   }
-  
+
   .featuredVisualOverlay {
     background: linear-gradient(to bottom, transparent 0%, var(--card-bg) 100%);
   }
@@ -879,4 +941,144 @@
   .featuredContent {
     padding: 2.5rem;
   }
+}
+
+/* ==========================================================================
+ * MARQUEE SECTION WRAPPER
+ * ========================================================================== */
+.marqueeSection {
+  padding: var(--sp-8) 0;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  background-color: rgba(10, 10, 15, 0.4);
+}
+
+.marqueeHeader {
+  text-align: center;
+  margin-bottom: var(--sp-6);
+}
+
+.marqueeHeading {
+  font-size: var(--fs-2xl);
+  margin: 0;
+}
+
+/* ==========================================================================
+ * ABOUT BLOCK — titles and timeline detail
+ * ========================================================================== */
+.aboutBlockTitle {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-0);
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-4);
+}
+
+.aboutBlockTitle:first-child {
+  margin-top: 0;
+}
+
+.timelineDegree {
+  font-size: var(--fs-base);
+  margin-bottom: 0.25rem;
+}
+
+.timelineInstitution {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+/* ==========================================================================
+ * LAYOUT HELPERS
+ * ========================================================================== */
+.stackLg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+/* ==========================================================================
+ * PREVIEW CARD — tuning for new classes
+ * ========================================================================== */
+.previewImage {
+  object-fit: cover;
+}
+
+.previewImageLogo {
+  object-fit: contain;
+  padding: 1.5rem;
+}
+
+.previewImageLogoWrap {
+  background-color: #fff;
+}
+
+.previewMetaStrong {
+  color: var(--text-0);
+}
+
+.previewMetaIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.previewTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: var(--sp-4);
+}
+
+.tagSm {
+  font-size: var(--fs-xs);
+  padding: 0.25rem 0.75rem;
+  margin: 0;
+}
+
+/* ==========================================================================
+ * FEATURED CARD — additional typography and visuals
+ * ========================================================================== */
+.featuredSubtitle {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.featuredTitle {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.featuredBlurb {
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 95%;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.featuredCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.featuredVisualLogo {
+  background-color: #fff;
+  padding: 3rem;
+}
+
+.featuredImageLogo {
+  object-fit: contain;
+}
+
+.featuredImageCover {
+  object-fit: cover;
+  object-position: center;
 }

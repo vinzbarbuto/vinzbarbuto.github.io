@@ -18,7 +18,7 @@ export default function Footer() {
                 <div className={styles.ctaContainer}>
                     <h2 className={styles.ctaTitle}>Ready to collaborate?</h2>
                     <p className={styles.ctaSubtitle}>I'm always open to discussing research, creative ideas or new opportunities.</p>
-                    <Link href="/contact" className={styles.ctaButton}>
+                    <Link href="/contact" className="btn btn--primary">
                         Get in Touch <Mail size={18} />
                     </Link>
                 </div>
@@ -27,7 +27,7 @@ export default function Footer() {
                     <a href="mailto:vincenzo.barbuto@unical.it" className={styles.socialLink} aria-label="Email">
                         <Mail size={24} />
                     </a>
-                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="GitHub">
+                    <a href="https://github.com/vbarbuto" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="GitHub">
                         <Github size={24} />
                     </a>
                     <a href="https://www.linkedin.com/in/vbarbuto/" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="LinkedIn">

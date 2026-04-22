@@ -1,0 +1,199 @@
+/* Shared keyframes */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ──────────────────────────────────────────────
+   Variant: "bar" — slim horizontal strip
+────────────────────────────────────────────── */
+.bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.07) 0%, rgba(16, 185, 129, 0.02) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    margin-right: 0.25rem;
+}
+
+.brandLabel {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.brandIcon {
+    color: var(--accent);
+}
+
+.brandExternal {
+    color: var(--accent);
+    opacity: 0.7;
+}
+
+.divider {
+    width: 1px;
+    height: 26px;
+    background: var(--card-border);
+    margin: 0 0.15rem;
+}
+
+.statPill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-pill);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+}
+
+.statPillIcon {
+    color: var(--text-2);
+}
+
+.statPillLabel {
+    font-size: var(--fs-xs);
+    color: var(--text-2);
+    font-weight: 500;
+}
+
+.statPillValue {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text-0);
+    letter-spacing: -0.01em;
+}
+
+.lastUpdated {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--text-2);
+}
+
+.lastUpdatedBar {
+    margin-left: auto;
+}
+
+.lastUpdatedText {
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+/* ──────────────────────────────────────────────
+   Variant: "cards" — 3 metric cards
+────────────────────────────────────────────── */
+.cardsRoot {
+    display: block;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--sp-4);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.cardsGrid {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 640px) {
+    .cardsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.metricCard {
+    position: relative;
+    padding: 1.1rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--metric-gradient);
+    border: 1px solid var(--metric-border);
+    overflow: hidden;
+    box-shadow: 0 0 20px var(--metric-glow);
+    transition: transform var(--dur-fast) var(--ease-std), box-shadow var(--dur-fast) var(--ease-std);
+}
+
+.metricCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--metric-glow);
+}
+
+.metricHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.metricLabel {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.metricIcon {
+    color: var(--text-2);
+    opacity: 0.7;
+}
+
+.metricValue {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-0);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    animation: countUp 0.5s ease forwards;
+}
+
+.metricSub {
+    font-size: 0.7rem;
+    color: var(--text-2);
+    margin-top: 0.35rem;
+    opacity: 0.75;
+    margin-bottom: 0;
+}
+
+.viewAllWrap {
+    margin-top: 0.85rem;
+    text-align: right;
+}
+
+.viewAll {
+    font-size: var(--fs-xs);
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}

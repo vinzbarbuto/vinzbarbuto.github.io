@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { motion, LayoutGroup } from "framer-motion";
 import styles from "./Navbar.module.css";
 
 const NAV_LINKS = [
@@ -30,13 +31,9 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 20) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
+            setScrolled(window.scrollY > 20);
         };
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
@@ -47,21 +44,31 @@ export default function Navbar() {
                     Vincenzo <span>Barbuto</span>
                 </Link>
 
-                <div className={`${styles.navLinks} ${isOpen ? styles.mobileOpen : ""}`}>
-                    {NAV_LINKS.map((link) => {
-                        const active = isActive(link.href);
-                        return (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={`${styles.navLink} ${active ? styles.active : ""}`}
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {link.name}
-                            </Link>
-                        );
-                    })}
-                </div>
+                <LayoutGroup id="nav">
+                    <div className={`${styles.navLinks} ${isOpen ? styles.mobileOpen : ""}`}>
+                        {NAV_LINKS.map((link) => {
+                            const active = isActive(link.href);
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className={`${styles.navLink} ${active ? styles.active : ""}`}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    {active && (
+                                        <motion.span
+                                            layoutId="nav-pill"
+                                            className={styles.navPill}
+                                            transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                                            aria-hidden="true"
+                                        />
+                                    )}
+                                    <span className={styles.navLinkLabel}>{link.name}</span>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </LayoutGroup>
 
                 <button
                     className={styles.mobileMenuBtn}

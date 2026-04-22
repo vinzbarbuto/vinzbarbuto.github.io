@@ -2,27 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export function useScrollReveal(options = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }) {
+export function useScrollReveal(threshold = 0.1, rootMargin = "0px 0px -50px 0px") {
     const [isVisible, setIsVisible] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-            // Dynamically set visibility based on intersection state for repeatable animations
-            setIsVisible(entry.isIntersecting);
-        }, options);
-
-        const currentRef = ref.current;
-        if (currentRef) {
-            observer.observe(currentRef);
+        const el = ref.current;
+        if (!el || typeof IntersectionObserver === "undefined") {
+            setIsVisible(true);
+            return;
         }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, [options.threshold, options.rootMargin]);
+        const io = new IntersectionObserver(
+            ([entry]) => setIsVisible(entry.isIntersecting),
+            { threshold, rootMargin }
+        );
+        io.observe(el);
+        return () => io.disconnect();
+    }, [threshold, rootMargin]);
 
     return { ref, isVisible };
 }

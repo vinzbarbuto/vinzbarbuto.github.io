@@ -8,13 +8,12 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem 1rem;
-    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--dur-med) var(--ease-std);
     background: transparent;
 }
 
 .navbar.scrolled {
     padding: 0.75rem 1rem;
-    /* Shrink the outer padding on scroll */
 }
 
 .navContainer {
@@ -25,79 +24,84 @@
     max-width: 900px;
     margin: 0 auto;
     padding: 1rem 2rem;
-    /* Initial larger flat padding */
-    border-radius: 9999px;
+    border-radius: var(--radius-pill);
     background-color: transparent;
     border: 1px solid transparent;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--dur-slow) var(--ease-std);
 }
 
 .navbar.scrolled .navContainer {
     padding: 0.6rem 2rem;
-    /* Shrink padding down to form a tight pill */
     background-color: var(--nav-bg);
     backdrop-filter: blur(24px);
-    /* Heavier blur for the dock */
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--card-border);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--surface-border);
+    box-shadow: var(--shadow-2), 0 0 15px rgba(255, 255, 255, 0.03);
 }
 
 .logo {
     font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--foreground);
+    font-size: var(--fs-md);
+    color: var(--text-0);
     text-decoration: none;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform var(--dur-med) var(--ease-std);
     transform-origin: left center;
 }
 
 .navbar.scrolled .logo {
     transform: scale(0.92);
-    /* Subtle shrink effect to emphasize docking */
 }
 
 .logo span {
-    color: var(--primary);
+    color: var(--accent);
 }
 
 .navLinks {
     display: flex;
-    gap: 0.5rem;
-    /* Reduced gap to bring pills closer */
+    gap: var(--sp-1);
 }
 
 .navLink {
-    color: var(--secondary);
-    font-size: 0.95rem;
+    color: var(--text-2);
+    font-size: var(--fs-sm);
     font-weight: 500;
     padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--radius-pill);
+    transition: color var(--dur-med) var(--ease-std);
     position: relative;
-    background-color: transparent;
+    isolation: isolate;
 }
 
-.navLink:hover {
-    color: #ffffff;
-    background-color: var(--selection-bg);
-    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.3);
+.navLinkLabel {
+    position: relative;
+    z-index: 1;
 }
 
-/* Glowing active state pill */
+/* Magic pill animates between active links via layoutId */
+.navPill {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.35);
+    z-index: 0;
+}
+
+@media (hover: hover) {
+    .navLink:hover {
+        color: var(--text-0);
+    }
+}
+
 .navLink.active {
-    color: var(--primary-hover);
-    background-color: var(--selection-bg);
-    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.3);
-    /* Subtle inner ring */
+    color: var(--accent-bright);
 }
-
 
 .mobileMenuBtn {
     display: none;
     background: none;
     border: none;
-    color: var(--foreground);
+    color: var(--text-0);
     cursor: pointer;
     padding: 0.5rem;
 }
@@ -115,11 +119,11 @@
         left: 0;
         right: 0;
         margin-top: 1rem;
-        background-color: var(--background);
+        background-color: var(--bg-1);
         padding: 1.5rem 2rem;
-        border: 1px solid var(--card-border);
-        border-radius: 1.5rem;
-        box-shadow: var(--shadow-md);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-2);
     }
 
     .mobileMenuBtn {

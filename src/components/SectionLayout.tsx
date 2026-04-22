@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
 import styles from "./SectionLayout.module.css";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+import Reveal from "./Reveal";
 
 interface SectionLayoutProps {
     id?: string;
@@ -19,22 +17,18 @@ export default function SectionLayout({
     children,
     className = "",
 }: SectionLayoutProps) {
-    const { ref, isVisible } = useScrollReveal({ threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
     return (
-        <section
-            id={id}
-            ref={ref}
-            className={`${styles.section} ${className} ${isVisible ? styles.visible : styles.hidden}`}
-        >
+        <section id={id} className={`${styles.section} ${className}`}>
             <div className="container">
-                <div className={styles.header}>
-                    <h2 className={styles.title}>{title}</h2>
-                    {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
-                </div>
-                <div className={styles.content}>
-                    {children}
-                </div>
+                <Reveal>
+                    <div className={styles.header}>
+                        <h2 className={styles.title}>{title}</h2>
+                        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+                    </div>
+                </Reveal>
+                <Reveal delay={0.08}>
+                    <div className={styles.content}>{children}</div>
+                </Reveal>
             </div>
         </section>
     );

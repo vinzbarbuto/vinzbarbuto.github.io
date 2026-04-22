@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Outfit } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AuroraBackground from "@/components/AuroraBackground";
+import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,12 +32,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${spaceGrotesk.variable} ${outfit.variable}`} suppressHydrationWarning>
 
-        {/* Global Dynamic Aura Background */}
-        <div className="global-fluid-bg">
-          <div className="global-blob global-blob-1"></div>
-          <div className="global-blob global-blob-2"></div>
-          <div className="global-blob global-blob-3"></div>
-        </div>
+        {/* Global aurora background — mouse parallax + grain */}
+        <AuroraBackground />
+
+        {/* Top-of-page scroll progress bar */}
+        <ScrollProgress />
 
         <Navbar />
         <main style={{ minHeight: "100vh", paddingTop: "4rem" }}>
