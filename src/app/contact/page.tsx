@@ -5,8 +5,16 @@ import { Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 import styles from "../page.module.css";
 
 export const metadata: Metadata = {
-    title: "Contact | Vincenzo Barbuto",
-    description: "Get in touch with Vincenzo Barbuto.",
+    title: "Contact",
+    description:
+        "Get in touch with Vincenzo Barbuto, Research Fellow at DIMES, University of Calabria.",
+    alternates: { canonical: "/contact" },
+    openGraph: {
+        title: "Contact | Vincenzo Barbuto",
+        description: "Get in touch with Vincenzo Barbuto.",
+        url: "/contact",
+        type: "website",
+    },
 };
 
 export default function ContactPage() {

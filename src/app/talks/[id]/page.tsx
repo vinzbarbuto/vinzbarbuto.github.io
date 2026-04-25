@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, MapPin } from "lucide-react";
@@ -10,6 +11,35 @@ export function generateStaticParams() {
     return talks.map((talk) => ({
         id: talk.id,
     }));
+}
+
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const params = await props.params;
+    const talk = talks.find((t) => t.id === params.id);
+    if (!talk) {
+        return { title: "Talk" };
+    }
+    const description = talk.description.length > 200 ? `${talk.description.slice(0, 197)}…` : talk.description;
+    const image = talk.image || "/placeholder.webp";
+    return {
+        title: talk.title,
+        description,
+        alternates: { canonical: `/talks/${talk.id}` },
+        openGraph: {
+            type: "article",
+            title: talk.title,
+            description,
+            url: `/talks/${talk.id}`,
+            images: [{ url: image, alt: talk.title }],
+            authors: ["Vincenzo Barbuto"],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: talk.title,
+            description,
+            images: [image],
+        },
+    };
 }
 
 export default async function TalkDetailPage(props: { params: Promise<{ id: string }> }) {

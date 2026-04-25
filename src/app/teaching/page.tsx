@@ -5,8 +5,16 @@ import { MapPin, Calendar, Briefcase } from "lucide-react";
 import styles from "./teaching.module.css";
 
 export const metadata: Metadata = {
-    title: "Teaching | Vincenzo Barbuto",
-    description: "Teaching and mentoring activities by Vincenzo Barbuto.",
+    title: "Teaching & Activities",
+    description:
+        "Teaching, mentoring, and academic activities by Vincenzo Barbuto at the University of Calabria.",
+    alternates: { canonical: "/teaching" },
+    openGraph: {
+        title: "Teaching & Activities | Vincenzo Barbuto",
+        description: "Teaching and mentoring activities by Vincenzo Barbuto.",
+        url: "/teaching",
+        type: "website",
+    },
 };
 
 export default function TeachingPage() {

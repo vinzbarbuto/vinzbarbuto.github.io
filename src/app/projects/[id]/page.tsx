@@ -106,8 +106,29 @@ export default async function ProjectDetailPage(props: { params: Promise<{ id: s
 export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const params = await props.params;
     const proj = projects.find((p) => p.id === params.id);
+    if (!proj) {
+        return { title: "Project" };
+    }
+    const description = proj.description.length > 200 ? `${proj.description.slice(0, 197)}…` : proj.description;
+    const image = proj.image || "/placeholder.webp";
     return {
-        title: proj ? `${proj.title} | Vincenzo Barbuto` : "Project | Vincenzo Barbuto",
-        description: proj?.description,
+        title: proj.title,
+        description,
+        alternates: { canonical: `/projects/${proj.id}` },
+        keywords: ["Vincenzo Barbuto", ...proj.tags],
+        openGraph: {
+            type: "article",
+            title: proj.title,
+            description,
+            url: `/projects/${proj.id}`,
+            images: [{ url: image, alt: proj.title }],
+            authors: ["Vincenzo Barbuto"],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: proj.title,
+            description,
+            images: [image],
+        },
     };
 }

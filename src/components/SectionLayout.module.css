@@ -1,8 +1,6 @@
 .section {
     padding: var(--sp-9) 0;
     scroll-margin-top: 6rem;
-    content-visibility: auto;
-    contain-intrinsic-size: 600px;
 }
 
 .header {
