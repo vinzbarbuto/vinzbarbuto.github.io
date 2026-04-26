@@ -37,20 +37,18 @@ export default function HeroTextLayer() {
                     </motion.span>
                 ))}
                 <br />
-                <span className={styles.spatialHighlightWrap}>
-                    <span className={styles.spatialHighlight}>
-                        {words2.map((w, i) => (
-                            <motion.span
-                                key={`l2-${i}`}
-                                className={styles.revealWord}
-                                initial={{ y: prefersReduced ? 0 : "100%", opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.05 * (words1.length + i), duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                {w}{i < words2.length - 1 ? <>&nbsp;</> : null}
-                            </motion.span>
-                        ))}
-                    </span>
+                <span className={styles.spatialHighlight}>
+                    {words2.map((w, i) => (
+                        <motion.span
+                            key={`l2-${i}`}
+                            className={styles.revealWord}
+                            initial={{ y: prefersReduced ? 0 : "100%", opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.05 * (words1.length + i), duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            {w}{i < words2.length - 1 ? <>&nbsp;</> : null}
+                        </motion.span>
+                    ))}
                 </span>
             </h1>
 
