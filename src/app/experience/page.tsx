@@ -93,6 +93,9 @@ function AcademicTab() {
     return (
         <div className={styles.container}>
             <TimelineSection title="Research Visits" items={academicService.researchVisits} />
+            {academicService.editorialRoles && academicService.editorialRoles.length > 0 && (
+                <TimelineSection title="Editorial Roles" items={academicService.editorialRoles} />
+            )}
             <TimelineSection title="Memberships" items={academicService.memberships} />
             <TimelineSection title="IEEE Student Branch Leadership" items={academicService.ieeeService} />
             {academicService.conferenceRoles.length > 0 && (

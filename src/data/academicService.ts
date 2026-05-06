@@ -55,5 +55,15 @@ export const academicService = {
         //     icon: "",
         //     url: ""
         // }
+    ],
+    editorialRoles: [
+        {
+            role: "Associate Editor",
+            institution: "IEEE Systems, Man, and Cybernetics (SMC) Letters",
+            period: "2025 - Present",
+            description: "Serving as an Associate Editor for the IEEE SMC Letters journal.",
+            icon: "https://res.cloudinary.com/dgec2pai8/image/upload/v1774537855/ieee_logo_zc2x2v.webp",
+            url: "https://www.ieeesmc.org/publications/ieee-systems-man-and-cybernetics-letters-smc-l/"
+        }
     ]
 };
