@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Outfit } from "next/font/google";
+import { Bricolage_Grotesque, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
@@ -7,14 +7,17 @@ import ScrollProgress from "@/components/ScrollProgress";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+// Display + body: one committed variable sans with inktraps and a grade axis.
+// Geist Mono carries instrument-label texture on eyebrows, badges, and metadata.
+const bricolage = Bricolage_Grotesque({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
+  axes: ["opsz", "wdth"],
 });
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
 });
@@ -141,7 +144,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <body className={`${bricolage.variable} ${geistMono.variable}`} suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}

@@ -95,7 +95,7 @@ body {
 body {
   color: var(--text-0);
   background: transparent;
-  font-family: var(--font-outfit), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;

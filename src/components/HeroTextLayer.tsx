@@ -1,55 +1,27 @@
 "use client";
 
-import { Download } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { Download, BookOpen } from "lucide-react";
 import styles from "../app/page.module.css";
 import { profile } from "@/data/profile";
 import { socialIcons } from "@/data/socialIcons";
-import { useMagnetic } from "@/hooks/useMagnetic";
-
-const TITLE_LINE_1 = "Building Intelligent";
-const HIGHLIGHT = "Autonomous Architectures.";
+import { MagneticLink } from "./MagneticLink";
 
 export default function HeroTextLayer() {
-    const prefersReduced = useReducedMotion();
-    const ctaRef = useMagnetic<HTMLAnchorElement>(12);
-
-    const words1 = TITLE_LINE_1.split(" ");
-    const words2 = HIGHLIGHT.split(" ");
-
     return (
         <div className={`${styles.spatialTextLayer} animate-fade-in-up delay-200`}>
-            <p className={styles.heroEyebrow}>
-                <span className={styles.eyebrowDot} />
-                Research Fellow · Edge AI · Cyber-Physical Systems
-            </p>
+            <div className={styles.heroEyebrow}>
+                <span className={styles.eyebrowDotWrapper}>
+                    <span className={styles.eyebrowDotRipple} />
+                    <span className={styles.eyebrowDot} />
+                </span>
+                <span className={styles.eyebrowLabel}>Available for Collaboration</span>
+                <span className={styles.eyebrowShimmer} />
+            </div>
 
             <h1 className={styles.spatialTitle}>
-                {words1.map((w, i) => (
-                    <motion.span
-                        key={`l1-${i}`}
-                        className={styles.revealWord}
-                        initial={{ y: prefersReduced ? 0 : "100%", opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.05 * i, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                        {w}&nbsp;
-                    </motion.span>
-                ))}
+                Building Intelligent
                 <br />
-                <span className={styles.spatialHighlight}>
-                    {words2.map((w, i) => (
-                        <motion.span
-                            key={`l2-${i}`}
-                            className={styles.revealWord}
-                            initial={{ y: prefersReduced ? 0 : "100%", opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.05 * (words1.length + i), duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                            {w}{i < words2.length - 1 ? <>&nbsp;</> : null}
-                        </motion.span>
-                    ))}
-                </span>
+                <span className={styles.spatialHighlight}>Autonomous Architectures</span>
             </h1>
 
             <p className={styles.spatialBio}>
@@ -58,30 +30,47 @@ export default function HeroTextLayer() {
             </p>
 
             <div className={styles.spatialActions}>
-                <a
-                    ref={ctaRef}
-                    href={profile.socials.cv}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.btnSpatialPrimary}
-                >
-                    <Download size={18} />
-                    Download Résumé
-                </a>
+                <div className={styles.spatialCtas}>
+                    <MagneticLink
+                        href={profile.socials.cv}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.heroBtn}
+                        strength={12}
+                    >
+                        <span className={styles.heroBtnIcon}>
+                            <Download size={16} />
+                        </span>
+                        Download Résumé
+                        <span className={styles.heroBtnShimmer} />
+                    </MagneticLink>
+                    <MagneticLink
+                        href="#recent-publications"
+                        className={`${styles.heroBtn} ${styles.heroBtnGhost}`}
+                        strength={12}
+                    >
+                        <span className={styles.heroBtnIcon}>
+                            <BookOpen size={16} />
+                        </span>
+                        View Research
+                        <span className={styles.heroBtnShimmer} />
+                    </MagneticLink>
+                </div>
 
                 <div className={styles.spatialSocials}>
                     {socialIcons.map((s) => {
                         const href = profile.socials[s.hrefKey];
                         const isExternal = s.hrefKey !== "email";
                         return (
-                            <a
+                            <MagneticLink
                                 key={s.key}
                                 href={href}
                                 aria-label={s.label}
+                                strength={12}
                                 {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                             >
                                 {s.icon}
-                            </a>
+                            </MagneticLink>
                         );
                     })}
                 </div>

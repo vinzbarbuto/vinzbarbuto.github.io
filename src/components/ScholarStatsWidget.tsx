@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import type { CSSProperties } from "react";
 import { BookOpen, BarChart2, TrendingUp, RefreshCw, ExternalLink } from "lucide-react";
 import type { ScholarStats } from "@/data/scholarStats";
 import _scholarData from "../../public/scholar-stats.json";
@@ -14,12 +12,6 @@ interface ScholarStatsWidgetProps {
     scholarUrl?: string;
 }
 
-type MetricVars = CSSProperties & {
-    "--metric-gradient": string;
-    "--metric-border": string;
-    "--metric-glow": string;
-};
-
 export default function ScholarStatsWidget({
     variant = "cards",
     scholarUrl = "https://scholar.google.com/citations?user=_-riw5YAAAAJ",
@@ -29,12 +21,12 @@ export default function ScholarStatsWidget({
         : null;
 
     const hasStats = stats.citations !== null || stats.hindex !== null;
+    if (!hasStats) return null;
 
     /* ─────────────────────────────────────────────
        VARIANT: "bar" — slim horizontal strip
     ───────────────────────────────────────────── */
     if (variant === "bar") {
-        if (!hasStats) return null;
         const pills = [
             { label: "Citations", value: stats.citations?.toLocaleString(), icon: <BookOpen size={12} /> },
             { label: "h-index", value: stats.hindex, icon: <BarChart2 size={12} /> },
@@ -71,86 +63,52 @@ export default function ScholarStatsWidget({
     }
 
     /* ─────────────────────────────────────────────
-       VARIANT: "cards" — 3 metric cards
+       VARIANT: "cards" — distilled editorial line
+       (Previously three SaaS-template metric cards;
+       rewritten to pure typography per DESIGN.md.)
     ───────────────────────────────────────────── */
-    if (!hasStats) return null;
-
-    const metrics: {
-        label: string;
-        value: string | number;
-        sub: string;
-        icon: React.ReactNode;
-        vars: MetricVars;
-    }[] = [
-            {
-                label: "Citations",
-                value: stats.citations?.toLocaleString() ?? "—",
-                sub: "Total citations on Scholar",
-                icon: <BookOpen size={20} />,
-                vars: {
-                    "--metric-gradient": "linear-gradient(135deg, rgba(16,185,129,0.18) 0%, rgba(16,185,129,0.05) 100%)",
-                    "--metric-border": "rgba(16,185,129,0.3)",
-                    "--metric-glow": "rgba(16,185,129,0.12)",
-                },
-            },
-            {
-                label: "h-index",
-                value: stats.hindex ?? "—",
-                sub: "Hirsch index",
-                icon: <BarChart2 size={20} />,
-                vars: {
-                    "--metric-gradient": "linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(99,102,241,0.05) 100%)",
-                    "--metric-border": "rgba(99,102,241,0.3)",
-                    "--metric-glow": "rgba(99,102,241,0.12)",
-                },
-            },
-            {
-                label: "i10-index",
-                value: stats.i10index ?? "—",
-                sub: "Papers with ≥10 citations",
-                icon: <TrendingUp size={20} />,
-                vars: {
-                    "--metric-gradient": "linear-gradient(135deg, rgba(56,189,248,0.18) 0%, rgba(56,189,248,0.05) 100%)",
-                    "--metric-border": "rgba(56,189,248,0.3)",
-                    "--metric-glow": "rgba(56,189,248,0.12)",
-                },
-            },
-        ];
+    const figures: { label: string; value: string }[] = [];
+    if (stats.citations != null) {
+        figures.push({ label: "citations", value: stats.citations.toLocaleString() });
+    }
+    if (stats.hindex != null) {
+        figures.push({ label: "h-index", value: String(stats.hindex) });
+    }
+    if (stats.i10index != null) {
+        figures.push({ label: "i10-index", value: String(stats.i10index) });
+    }
 
     return (
-        <div className={styles.cardsRoot}>
-            <div className={styles.header}>
-                <a href={scholarUrl} target="_blank" rel="noopener noreferrer" className={styles.brand}>
-                    <BookOpen size={15} className={styles.brandIcon} />
-                    <span className={styles.brandLabel}>Google Scholar</span>
-                    <ExternalLink size={11} className={styles.brandExternal} />
+        <div className={styles.distilled}>
+            <div className={styles.distilledEyebrow}>
+                <a
+                    href={scholarUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.distilledSource}
+                >
+                    <BookOpen size={12} aria-hidden="true" />
+                    <span>Google Scholar</span>
+                    <ExternalLink size={10} aria-hidden="true" />
                 </a>
                 {formattedDate && (
-                    <div className={styles.lastUpdated}>
-                        <RefreshCw size={10} />
-                        <span className={styles.lastUpdatedText}>Updated {formattedDate}</span>
-                    </div>
+                    <span className={styles.distilledUpdated}>
+                        Updated {formattedDate}
+                    </span>
                 )}
             </div>
 
-            <div className={styles.cardsGrid}>
-                {metrics.map(({ label, value, sub, icon, vars }) => (
-                    <div key={label} className={styles.metricCard} style={vars}>
-                        <div className={styles.metricHead}>
-                            <span className={styles.metricLabel}>{label}</span>
-                            <span className={styles.metricIcon}>{icon}</span>
-                        </div>
-                        <div className={styles.metricValue}>{value}</div>
-                        <p className={styles.metricSub}>{sub}</p>
-                    </div>
+            <p className={styles.distilledLine}>
+                {figures.map((f, i) => (
+                    <span key={f.label} className={styles.distilledFigure}>
+                        <span className={styles.distilledValue}>{f.value}</span>
+                        <span className={styles.distilledLabel}>{f.label}</span>
+                        {i < figures.length - 1 && (
+                            <span className={styles.distilledSep} aria-hidden="true">·</span>
+                        )}
+                    </span>
                 ))}
-            </div>
-
-            <div className={styles.viewAllWrap}>
-                <Link href="/publications" className={styles.viewAll}>
-                    View all publications →
-                </Link>
-            </div>
+            </p>
         </div>
     );
 }

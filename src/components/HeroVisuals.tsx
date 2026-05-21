@@ -7,8 +7,10 @@ import styles from "../app/page.module.css";
 import { profile } from "@/data/profile";
 import { withBasePath } from "@/lib/basePath";
 
+const PROFILE_IMAGE_URL = "https://res.cloudinary.com/dgec2pai8/image/upload/v1774537873/profile_oioxa3.webp";
+const PROFILE_IMAGE_SIZES = "(max-width: 768px) 150px, 300px";
+
 export default function HeroVisuals() {
-    const [isHovered, setIsHovered] = useState(false);
     const [hoverCapable, setHoverCapable] = useState(true);
 
     useEffect(() => {
@@ -26,33 +28,29 @@ export default function HeroVisuals() {
     const maskRadius = useSpring(0, { stiffness: 200, damping: 20 });
     const maskImage = useMotionTemplate`radial-gradient(${maskRadius}px circle at ${imageMouseX}px ${imageMouseY}px, black 80%, transparent 100%)`;
 
-    const handleMouseEnter = () => setIsHovered(true);
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
     return (
-        <div
-            className={`${styles.spatialVisualLayer} animate-fade-in-up delay-100`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={{ position: "relative" }} // Removed perspective
-        >
+        <div className={`${styles.spatialVisualLayer} animate-fade-in-up delay-100`}>
             <motion.div
                 className={styles.rotatingRingWrapper}
                 style={{
                     zIndex: 1
                 }}
             >
-                {/* Outer Rotating Text SVG */}
-                <svg className={styles.rotatingRing} viewBox="0 0 200 200" width="300" height="300">
+                {/* Outer Rotating Text SVG — decorative */}
+                <svg
+                    className={styles.rotatingRing}
+                    viewBox="0 0 200 200"
+                    width="300"
+                    height="300"
+                    aria-hidden="true"
+                    focusable="false"
+                >
                     <defs>
                         <path id="circlePath" d="M 100, 100 m -80, 0 a 80,80 0 0,1 160,0 a 80,80 0 0,1 -160,0" />
                     </defs>
                     <text
                         style={{
-                            fontFamily: 'monospace',
+                            fontFamily: 'var(--font-geist-mono), ui-monospace, monospace',
                             fontSize: '10.5px',
                             fontWeight: '600',
                             letterSpacing: '2px'
@@ -60,7 +58,7 @@ export default function HeroVisuals() {
                         fill="currentColor"
                     >
                         <textPath href="#circlePath" startOffset="0%">
-                            EDGE AI • DIGITAL TWINS • CYBER-PHYSICAL SYSTEMS •
+                            EDGE AI • DIGITAL TWINS • CYBER-PHYSICAL SYSTEMS
                         </textPath>
                     </text>
                 </svg>
@@ -76,39 +74,20 @@ export default function HeroVisuals() {
                     onMouseEnter={hoverCapable ? () => maskRadius.set(120) : undefined}
                     onMouseLeave={hoverCapable ? () => maskRadius.set(0) : undefined}
                 >
-                    {/* Expanding Aura Effect (Replaces the mouse spotlight) */}
-                    <motion.div
-                        style={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "50%",
-                            background: "radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, transparent 70%)",
-                            x: "-50%",
-                            y: "-50%",
-                            zIndex: -1,
-                        }}
-                        animate={{
-                            scale: isHovered ? 1.6 : 0.8,
-                            opacity: isHovered ? 1 : 0
-                        }}
-                        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                    />
-
                     {/* The Base Real Image */}
                     <Image
-                        src={withBasePath("https://res.cloudinary.com/dgec2pai8/image/upload/v1774537873/profile_oioxa3.webp")}
+                        src={withBasePath(PROFILE_IMAGE_URL)}
                         alt={profile.name}
                         fill
-                        sizes="(max-width: 768px) 150px, 300px"
+                        sizes={PROFILE_IMAGE_SIZES}
                         className={styles.profileCircleImageBase}
                         priority
                     />
 
-                    {/* The Overlay Digital "Drawn" Image (Revealed by cursor) */}
+                    {/* The Overlay Digital "Drawn" Image (Revealed by cursor).
+                        Aria-hidden because it duplicates the base image's alt content. */}
                     <motion.div
+                        aria-hidden="true"
                         style={{
                             position: "absolute",
                             inset: 0,
@@ -118,15 +97,13 @@ export default function HeroVisuals() {
                         }}
                     >
                         <Image
-                            src={withBasePath("https://res.cloudinary.com/dgec2pai8/image/upload/v1774537873/profile_oioxa3.webp")}
-                            alt={profile.name}
+                            src={withBasePath(PROFILE_IMAGE_URL)}
+                            alt=""
                             fill
-                            sizes="(max-width: 768px) 150px, 300px"
+                            sizes={PROFILE_IMAGE_SIZES}
                             className={styles.profileCircleImageWireframe}
-                            priority
                         />
-                        {/* Digital Grid & Scanline Overlay inside the mask */}
-                        <div className={styles.digitalOverlay}></div>
+
                     </motion.div>
                 </motion.div>
 

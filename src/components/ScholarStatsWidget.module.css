@@ -1,16 +1,3 @@
-/* Shared keyframes */
-@keyframes countUp {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* ──────────────────────────────────────────────
    Variant: "bar" — slim horizontal strip
 ────────────────────────────────────────────── */
@@ -36,10 +23,11 @@
 }
 
 .brandLabel {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: var(--fs-xs);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent);
-    letter-spacing: 0.07em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
 }
 
@@ -74,9 +62,11 @@
 }
 
 .statPillLabel {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: var(--fs-xs);
     color: var(--text-2);
     font-weight: 500;
+    letter-spacing: 0.04em;
 }
 
 .statPillValue {
@@ -98,102 +88,111 @@
 }
 
 .lastUpdatedText {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.72rem;
     font-weight: 500;
+    letter-spacing: 0.04em;
 }
 
 /* ──────────────────────────────────────────────
-   Variant: "cards" — 3 metric cards
+   Variant: "cards" — distilled editorial line
+   No boxes, no per-metric color, no icons-as-chrome.
+   One eyebrow row, one figures row. Pure typography.
 ────────────────────────────────────────────── */
-.cardsRoot {
-    display: block;
+.distilled {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-3) 0 var(--sp-2);
+    border-top: 1px solid var(--surface-border);
+    border-bottom: 1px solid var(--surface-border);
 }
 
-.header {
+.distilledEyebrow {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--sp-4);
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--sp-3) var(--sp-5);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-2);
 }
 
-.cardsGrid {
-    display: grid;
-    gap: 0.85rem;
-    grid-template-columns: repeat(3, 1fr);
+.distilledSource {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-std);
+}
+
+.distilledSource:hover {
+    color: var(--accent-bright);
+}
+
+.distilledUpdated {
+    color: var(--text-3);
+}
+
+.distilledLine {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-2) var(--sp-5);
+    margin: 0;
+    max-width: none;
+    color: var(--text-1);
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-size: var(--fs-md);
+    line-height: 1.3;
+}
+
+.distilledFigure {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    white-space: nowrap;
+}
+
+.distilledValue {
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--text-0);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.distilledLabel {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+.distilledSep {
+    color: var(--text-3);
+    padding: 0 var(--sp-2);
+    user-select: none;
 }
 
 @media (max-width: 640px) {
-    .cardsGrid {
-        grid-template-columns: 1fr;
+    .distilledEyebrow {
+        gap: var(--sp-2) var(--sp-4);
     }
-}
-
-.metricCard {
-    position: relative;
-    padding: 1.1rem 1rem;
-    border-radius: var(--radius-md);
-    background: var(--metric-gradient);
-    border: 1px solid var(--metric-border);
-    overflow: hidden;
-    box-shadow: 0 0 20px var(--metric-glow);
-    transition: transform var(--dur-fast) var(--ease-std), box-shadow var(--dur-fast) var(--ease-std);
-}
-
-.metricCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px var(--metric-glow);
-}
-
-.metricHead {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.5rem;
-}
-
-.metricLabel {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
-.metricIcon {
-    color: var(--text-2);
-    opacity: 0.7;
-}
-
-.metricValue {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--text-0);
-    letter-spacing: -0.03em;
-    line-height: 1;
-    animation: countUp 0.5s ease forwards;
-}
-
-.metricSub {
-    font-size: 0.7rem;
-    color: var(--text-2);
-    margin-top: 0.35rem;
-    opacity: 0.75;
-    margin-bottom: 0;
-}
-
-.viewAllWrap {
-    margin-top: 0.85rem;
-    text-align: right;
-}
-
-.viewAll {
-    font-size: var(--fs-xs);
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
+    .distilledLine {
+        gap: var(--sp-2) var(--sp-4);
+    }
+    .distilledValue {
+        font-size: var(--fs-xl);
+    }
+    .distilledSep {
+        display: none;
+    }
 }

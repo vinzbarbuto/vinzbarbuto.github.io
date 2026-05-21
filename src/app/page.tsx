@@ -1,37 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, MapPin, Calendar } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 import SectionLayout from "@/components/SectionLayout";
+import Reveal from "@/components/Reveal";
 import HeroVisuals from "@/components/HeroVisuals";
 import HeroTextLayer from "@/components/HeroTextLayer";
 import ScholarStatsWidget from "@/components/ScholarStatsWidget";
 import SpotlightLink from "@/components/SpotlightLink";
+import MarqueeSection from "@/components/MarqueeSection";
 import { profile } from "@/data/profile";
 import { publications } from "@/data/publications";
 import { projects } from "@/data/projects";
 import { talks } from "@/data/talks";
 import { withBasePath } from "@/lib/basePath";
 
-const TECH = [
-  "Next.js",
-  "React",
-  "TypeScript",
-  "Python",
-  "Java",
-  "C++",
-  "TensorFlow Lite",
-  "Lingua Franca",
-  "Edge AI",
-  "Digital Twins",
-  "Cyber-Physical Systems",
-  "Multi Agent Systems",
-  "Angular",
-  "Node Red",
-  "Grafana",
-  "AWS Cloud",
-  "Eclipse Ditto",
-] as const;
 
 export default function Home() {
   const recentPublications = publications.slice(0, 3);
@@ -43,8 +26,8 @@ export default function Home() {
       <section className={styles.spatialHero} id="home">
         <div className={`container ${styles.spatialContainer}`}>
           <div className={styles.spatialGrid}>
-            <HeroVisuals />
             <HeroTextLayer />
+            <HeroVisuals />
           </div>
         </div>
       </section>
@@ -69,13 +52,15 @@ export default function Home() {
             <h3 className={styles.aboutBlockTitle}>Education</h3>
             <div className={styles.timeline}>
               {profile.education.map((item, index) => (
-                <div key={index} className={styles.timelineItem}>
-                  <div className={styles.timelineDot}></div>
-                  <div className={styles.timelineContent}>
-                    <h4 className={styles.timelineDegree}>{item.degree}</h4>
-                    <p className={styles.timelineInstitution}>{item.institution}</p>
+                <Reveal key={index} delay={index * 0.07} distance={16}>
+                  <div className={styles.timelineItem}>
+                    <div className={styles.timelineDot}></div>
+                    <div className={styles.timelineContent}>
+                      <h4 className={styles.timelineDegree}>{item.degree}</h4>
+                      <p className={styles.timelineInstitution}>{item.institution}</p>
+                    </div>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -83,20 +68,7 @@ export default function Home() {
       </SectionLayout>
 
       {/* Core Technologies Marquee */}
-      <section className={styles.marqueeSection}>
-        <div className={`container ${styles.marqueeHeader}`}>
-          <h2 className={styles.marqueeHeading}>Core Technologies</h2>
-        </div>
-        <div className={styles.marqueeContainer}>
-          <div className={styles.marqueeTrack}>
-            {[...TECH, ...TECH].map((tech, idx) => (
-              <div key={`${tech}-${idx}`} className={styles.marqueeItem}>
-                {tech}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <MarqueeSection />
 
       {/* Featured Project */}
       {featuredProject && (
@@ -137,7 +109,7 @@ export default function Home() {
         </SectionLayout>
       )}
 
-      {/* Recent Publications */}
+      {/* Recent Publications — numbered editorial list, no card chrome */}
       <SectionLayout
         id="recent-publications"
         title="Recent Publications"
@@ -146,42 +118,38 @@ export default function Home() {
         <div className={styles.stackLg}>
           <ScholarStatsWidget variant="cards" />
 
-          {recentPublications.map((pub) => (
-            <SpotlightLink href={`/publications/${pub.id}`} key={pub.id} className={styles.previewCard}>
-              <div className={styles.previewImageWrapper}>
-                <Image
-                  src={withBasePath(pub.image || "/placeholder.webp")}
-                  alt={pub.title}
-                  fill
-                  className={styles.previewImage}
-                />
-              </div>
-
-              <div className={styles.previewContent}>
-                <h3 className={styles.previewTitle}>{pub.title}</h3>
-
-                <div className={styles.previewMeta}>
-                  <span className={styles.previewMetaStrong}>{pub.type}</span>
-                  <span>•</span>
-                  <span>{pub.venue}</span>
-                  <span>•</span>
-                  <span>{pub.year}</span>
-                </div>
-
-                <p className={styles.previewDesc}>
-                  {pub.abstract}
-                </p>
-
-                <div className={styles.previewTags}>
-                  {pub.tags.map(tag => (
-                    <span key={tag} className={`${styles.interestItem} ${styles.tagSm}`}>
-                      {tag}
+          <ol className={styles.pubList}>
+            {recentPublications.map((pub, index) => (
+              <Reveal key={pub.id} as="li" delay={index * 0.08}>
+                <Link href={`/publications/${pub.id}`} className={styles.pubItem}>
+                  <span className={styles.pubNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.pubItemBody}>
+                    <h3 className={styles.pubItemTitle}>{pub.title}</h3>
+                    <div className={styles.pubItemMeta}>
+                      <span className={styles.pubItemMetaType}>{pub.type}</span>
+                      <span className={styles.pubItemMetaDot} aria-hidden="true">/</span>
+                      <span>{pub.venue}</span>
+                      <span className={styles.pubItemMetaDot} aria-hidden="true">/</span>
+                      <span>{pub.year}</span>
+                    </div>
+                    <p className={styles.pubItemAbstract}>{pub.abstract}</p>
+                    <div className={styles.pubItemTags}>
+                      {pub.tags.map(tag => (
+                        <span key={tag} className={`${styles.interestItem} ${styles.tagSm}`}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className={styles.pubItemArrow}>
+                      Read paper <ArrowRight size={14} />
                     </span>
-                  ))}
-                </div>
-              </div>
-            </SpotlightLink>
-          ))}
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </ol>
 
           <Link href="/publications" className={styles.sectionLink}>
             See all publications <ArrowRight size={18} />
@@ -189,43 +157,27 @@ export default function Home() {
         </div>
       </SectionLayout>
 
-      {/* Recent Talks */}
+      {/* Recent Talks — date-led timeline, no card chrome */}
       <SectionLayout
         id="recent-talks"
         title="Recent Talks & News"
         subtitle="Latest presentations and workshops."
       >
         <div className={styles.stackLg}>
-          {talks.slice(0, 2).map((talk) => (
-            <SpotlightLink href={`/talks/${talk.id}`} key={talk.id} className={styles.previewCard}>
-              <div className={`${styles.previewImageWrapper} ${talk.isLogo ? styles.previewImageLogoWrap : ""}`}>
-                <Image
-                  src={withBasePath(talk.image || "/placeholder.webp")}
-                  alt={talk.title}
-                  fill
-                  className={talk.isLogo ? styles.previewImageLogo : styles.previewImage}
-                />
-              </div>
-
-              <div className={styles.previewContent}>
-                <h3 className={styles.previewTitle}>{talk.title}</h3>
-
-                <div className={styles.previewMeta}>
-                  <span className={styles.previewMetaIcon}>
-                    <MapPin size={16} /> {talk.event}
-                  </span>
-                  <span>•</span>
-                  <span className={styles.previewMetaIcon}>
-                    <Calendar size={16} /> {talk.date}
-                  </span>
-                </div>
-
-                <p className={styles.previewDesc}>
-                  {talk.description}
-                </p>
-              </div>
-            </SpotlightLink>
-          ))}
+          <ol className={styles.talkList}>
+            {talks.slice(0, 2).map((talk, index) => (
+              <Reveal key={talk.id} as="li" delay={index * 0.08}>
+                <Link href={`/talks/${talk.id}`} className={styles.talkItem}>
+                  <span className={styles.talkDate}>{talk.date}</span>
+                  <div className={styles.talkItemBody}>
+                    <h3 className={styles.talkItemTitle}>{talk.title}</h3>
+                    <div className={styles.talkItemEvent}>{talk.event}</div>
+                    <p className={styles.talkItemDesc}>{talk.description}</p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </ol>
 
           <Link href="/talks" className={styles.sectionLink}>
             See all talks <ArrowRight size={18} />
