@@ -67,6 +67,13 @@ export default function Navbar() {
                                 </Link>
                             );
                         })}
+                        <Link
+                            href="/workspace"
+                            className={styles.threeDStudioBtn}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            <span>3D Studio</span>
+                        </Link>
                     </div>
                 </LayoutGroup>
 

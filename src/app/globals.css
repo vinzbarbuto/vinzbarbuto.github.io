@@ -413,3 +413,25 @@ h6 {
     filter: blur(30px);
   }
 }
+
+/* ==========================================================================
+ * 3D WORKSPACE LAYOUT OVERRIDES — triggers when .workspace-3d-active is present
+ * ========================================================================== */
+body:has(.workspace-3d-active) {
+  overflow: hidden !important;
+  max-height: 100vh;
+}
+
+body:has(.workspace-3d-active) main {
+  padding-top: 0 !important;
+  min-height: 100vh !important;
+}
+
+body:has(.workspace-3d-active) footer {
+  display: none !important;
+}
+
+body:has(.workspace-3d-active) .global-fluid-bg {
+  display: none !important;
+}
+

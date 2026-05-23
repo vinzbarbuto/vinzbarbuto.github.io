@@ -130,3 +130,41 @@
         display: block;
     }
 }
+
+.threeDStudioBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: var(--accent-bright);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    padding: 0.4rem 1.1rem;
+    border-radius: var(--radius-pill);
+    transition: all var(--dur-med) var(--ease-std);
+    text-decoration: none;
+    margin-left: 0.75rem;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+    cursor: pointer;
+}
+
+.threeDStudioBtn span {
+    position: relative;
+    z-index: 1;
+}
+
+.threeDStudioBtn:hover {
+    background: var(--accent);
+    color: #04120c;
+    border-color: transparent;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .threeDStudioBtn {
+        display: none;
+    }
+}
+
