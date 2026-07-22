@@ -46,15 +46,22 @@ export const academicService = {
         }
     ],
     conferenceRoles: [
-        // Add your conference roles here, e.g.:
-        // {
-        //     role: "TPC Member",
-        //     institution: "Conference Name",
-        //     period: "2024",
-        //     description: "Served as Technical Program Committee member...",
-        //     icon: "",
-        //     url: ""
-        // }
+        {
+            role: "Web Chair",
+            institution: "IEEE SWC 2026 - IEEE Smart World Congress",
+            period: "2026",
+            description: "Serving as Web Chair for the 2026 IEEE Smart World Congress (IEEE SWC 2026).",
+            icon: "https://res.cloudinary.com/dgec2pai8/image/upload/v1774537855/ieee_logo_zc2x2v.webp",
+            url: "https://swc-ieee-2026.github.io/"
+        },
+        {
+            role: "Workshop Co-Chair",
+            institution: "ICON - International Workshop on Intelligent Continuum Operations and Networking",
+            period: "2026",
+            description: "Co-chairing the International Workshop on Intelligent Continuum Operations and Networking (ICON).",
+            icon: "https://res.cloudinary.com/dgec2pai8/image/upload/v1784728047/icon_etgjdj.webp",
+            url: "https://workshop-icon.github.io/2026/"
+        }
     ],
     editorialRoles: [
         {

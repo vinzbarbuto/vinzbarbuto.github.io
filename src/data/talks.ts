@@ -1,5 +1,15 @@
 export const talks = [
     {
+        id: "ieee-metrolivenv-2026",
+        title: "Wearable Monitoring for Early Cardiotoxicity Detection in Cancer Patients: The COMPASS Vision",
+        event: "2026 IEEE International Workshop on Metrology for Living Environment - IEEE MetroLivEnv 2026",
+        date: "July 2026",
+        description: "The talk examined the role of continuous wearable monitoring in the early detection of cancer therapy-related cardiovascular toxicity. It reviewed the main wearable sensing modalities for cardiovascular biomarkers, ECG, PPG, blood pressure estimation, heart rate variability, and IMU-derived functional capacity, together with their clinical relevance and metrological limitations, and introduced the research vision of the COMPASS project, an EU-funded initiative integrating wearable-derived data into AI-based clinical decision support for personalized cardio-oncology care.",
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1784727244/IMG_0094_cumhf6.webp",
+        isLogo: false,
+        link: "https://www.metrolivenv.org/"
+    },
+    {
         id: "urbsense-2026",
         title: "Enhancing Intelligent Transportation Systems with Optimal Cloud-to-Things Resource Allocation",
         event: "URBSENSE 2026 - Urban Intelligence for Safer Cities",
