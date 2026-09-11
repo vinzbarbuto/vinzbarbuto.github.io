@@ -12,6 +12,7 @@ interface TalkItem {
     title: string;
     description: string;
     image?: string;
+    imagePosition?: string;
     isLogo?: boolean;
     event?: string;
     date?: string;
@@ -189,6 +190,7 @@ export default function TalksClient({ talks }: { talks: TalkItem[] }) {
                                     fill
                                     style={{ 
                                         objectFit: talk.isLogo ? "contain" : "cover", 
+                                        objectPosition: talk.imagePosition || "center",
                                         padding: talk.isLogo ? "1.5rem" : "0" 
                                     }}
                                 />

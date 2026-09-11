@@ -161,7 +161,7 @@ export default function Home() {
       <SectionLayout
         id="recent-talks"
         title="Recent Talks & News"
-        subtitle="Latest presentations and workshops."
+        subtitle="Latest presentations and conference talks."
       >
         <div className={styles.stackLg}>
           <ol className={styles.talkList}>

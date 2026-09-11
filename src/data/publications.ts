@@ -18,6 +18,72 @@ export interface Publication {
 
 export const publications: Publication[] = [
     {
+        id: "metrolivenv2026",
+        title: "Wearable Monitoring for Early Cardiotoxicity Detection in Cancer Patients: The COMPASS Vision",
+        authors: "V Barbuto, C Savaglio, IS Curren, G Liuzzo, L Natale, S Gravina, SJ Archibald, R Gravina",
+        venue: "2026 IEEE International Workshop on Metrology for Living Environment (MetroLivEnv)",
+        type: "Conference Paper",
+        year: 2026,
+        abstract: "Cancer therapies have substantially improved survival outcomes, yet cancer therapy-related cardiovascular toxicity (CTR-CVT) remains a major concern, with approximately one in four anticancer drugs carrying cardiac or vascular safety warnings. Since current monitoring relies on periodic hospital-based assessments, transient or progressively evolving cardiovascular alterations often escape timely detection. Within the context of COMPASS (Cardio-Oncology Multidisciplinary Patient Assistance Solution), an EU Innovative Health Initiative (IHI) project (Grant Agreement No. 101253264), this extended abstract explores continuous wearable sensing in real-world environments as a complementary paradigm for early detection of CTR-CVT. After reviewing the clinical indicators most relevant to longitudinal monitoring, we survey the corresponding wearable modalities together with their typical accuracy ranges and metrological limitations, and introduce the COMPASS research vision integrating wearable-derived data into AI-based clinical decision support for personalized cardio-oncology care.",
+        links: {
+            url: "https://ieeexplore.ieee.org/abstract/document/11659865/",
+        },
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1789141147/compass_1_fvdusy.webp",
+        tags: ["Wearable Monitoring", "Cardiotoxicity", "eHealth", "COMPASS Vision"],
+        bibtex: `@inproceedings{barbuto2026wearable,
+  title={Wearable Monitoring for Early Cardiotoxicity Detection in Cancer Patients: The COMPASS Vision},
+  author={Barbuto, Vincenzo and Savaglio, Claudio and Curren, Ivy S and Liuzzo, Giovanna and Natale, Luigi and Gravina, Saverio and Archibald, Stephen J and Gravina, Raffaele},
+  booktitle={2026 IEEE International Workshop on Metrology for Living Environment (MetroLivEnv)},
+  pages={295--300},
+  year={2026},
+  organization={IEEE}
+}`
+    },
+    {
+        id: "dcoss2026",
+        title: "Named Data Networking (NDN) for Collective Network Intelligence: a Smart Museum case study",
+        authors: "R Ul Islam, V Barbuto, C Savaglio, R Gravina",
+        venue: "2026 22nd International Conference on Distributed Computing in Smart Systems and the Internet of Things (DCOSS-IoT)",
+        type: "Conference Paper",
+        year: 2026,
+        abstract: "Future smart systems are increasingly characterized by pervasive AI deployed both at the back- and front-end. However, limiting intelligence to the software layer is insufficient to meet the scalability, adaptability, and resilience requirements of emerging large-scale cyber-physical ecosystems. Indeed, intelligence must extend across both the entire architectural stack and the infrastructure, including the network layer itself. In this paper, we explore Named Data Networking (NDN) as an enabler of collective intelligence at the network level. Unlike traditional IP-based architectures, NDN natively supports in-network caching, name-based routing, and stateful forwarding, thus enabling distributed decision-making mechanisms to emerge directly from the network fabric. We argue that these properties can be interpreted as forms of collective intelligence, where the network collaboratively optimizes content dissemination and resource utilization, and validate our findings through a Smart Museum case study.",
+        links: {
+            url: "https://ieeexplore.ieee.org/abstract/document/11659377/",
+        },
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1789141147/NDN_g2pnku.webp",
+        tags: ["Named Data Networking", "Collective Intelligence", "IoT", "Smart Systems"],
+        bibtex: `@inproceedings{ulislam2026named,
+  title={Named Data Networking (NDN) for Collective Network Intelligence: a Smart Museum case study},
+  author={Ul Islam, Rafiq and Barbuto, Vincenzo and Savaglio, Claudio and Gravina, Raffaele},
+  booktitle={2026 22nd International Conference on Distributed Computing in Smart Systems and the Internet of Things (DCOSS-IoT)},
+  pages={877--882},
+  year={2026},
+  organization={IEEE}
+}`
+    },
+    {
+        id: "metroind2026",
+        title: "Uncertainty-Aware Digital Twins for Industry 4.0: A Metrology-Driven Conceptual Framework with a Healthcare Robotics Case Study",
+        authors: "D Thakur, V Barbuto, C Savaglio, A Guzzo, G Fortino",
+        venue: "2026 IEEE International Workshop on Metrology for Industry 4.0 & IoT (MetroInd4.0 & IoT)",
+        type: "Conference Paper",
+        year: 2026,
+        abstract: "Digital twins have emerged as a key enabling technology in Industry 4.0, enabling virtual representations of physical systems that evolve in real time through data synchronization. They are widely applied to industrial robotic systems such as manipulators, collaborative robots, and automated production cells for applications including process monitoring, predictive maintenance, and control optimization. Despite their growing adoption, many existing digital twin implementations implicitly assume that sensor measurements are accurate and reliable. In practice, measurements of key variables such as position, velocity, force, and system states are affected by uncertainty arising from noise, bias, drift, and environmental disturbances, which can significantly impact the reliability of digital twin predictions. This paper proposes a metrology-driven conceptual framework for uncertainty-aware digital twins (UA-DTs), integrating measurement uncertainty into the digital twin lifecycle to ensure trustworthy monitoring and control, exemplified through a healthcare robotics case study.",
+        links: {
+            url: "https://ieeexplore.ieee.org/abstract/document/11653119/",
+        },
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1789141147/DT_m6yhrf.webp",
+        tags: ["Digital Twin", "Metrology", "Industry 4.0", "Robotics"],
+        bibtex: `@inproceedings{thakur2026uncertainty,
+  title={Uncertainty-Aware Digital Twins for Industry 4.0: A Metrology-Driven Conceptual Framework with a Healthcare Robotics Case Study},
+  author={Thakur, Dipanwita and Barbuto, Vincenzo and Savaglio, Claudio and Guzzo, Antonella and Fortino, Giancarlo},
+  booktitle={2026 IEEE International Workshop on Metrology for Industry 4.0 & IoT (MetroInd4.0 & IoT)},
+  pages={696--701},
+  year={2026},
+  organization={IEEE}
+}`
+    },
+    {
         id: "percom2026",
         title: "Enhancing Intelligent Transportation Systems with Optimal Cloud-to-Things Resource Allocation",
         authors: "V Barbuto, M Pettorali, F Righetti, C Savaglio, G Anastasi, G Fortino",

@@ -1,5 +1,26 @@
 export const talks = [
     {
+        id: "ieee-digital-twin-2026",
+        title: "An Edge-Cloud Digital Twin Platform for Intelligent Smart Park Services",
+        event: "The 2026 IEEE International Conference on Digital Twin (IEEE Digital Twin 2026)",
+        date: "September 2026",
+        description: "Protected natural areas increasingly require intelligent infrastructures to monitor environmental conditions, support visitors, and assist park management while preserving privacy and operating under limited connectivity. Addressing these challenges requires integrated architectures that combine distributed sensing, edge intelligence, cloud services, and Digital Twin (DT) technologies. This work presents a Smart Park platform developed for the \"I Giganti della Sila\" State Reserve in the Sila National Park, Calabria, Italy. The platform adopts a layered edge-cloud architecture organized around a closed operational loop that acquires environmental and visitor data, processes them through distributed intelligence, and delivers actionable services to visitors and park operators. A territorial DT federates multiple sensing and analytics subsystems into a unified, real-time representation of the park.",
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1789139318/presentation_IEEE_Digital_Twin_yrktlo.webp",
+        imagePosition: "left",
+        isLogo: false,
+        link: "https://swc-ieee-2026.github.io/digitaltwin/"
+    },
+    {
+        id: "swc-dt-tutorial-2026",
+        title: "Digital Twin Engineering: Architectures, AI Techniques, and the TopDown/BottomUp Lifecycle of Behavior Model Construction",
+        event: "Tutorial @ 2026 IEEE Smart World Congress (IEEE SWC 2026)",
+        date: "September 2026",
+        description: "Tutorial co-presented with Dr. Roberto Minerva exploring the software-oriented foundations of Digital Twin engineering. It examines how architectural choices, AI techniques (Deep Learning, Generative AI, and Reinforcement Learning in the loop), and top-down/bottom-up methodologies shape viable behavior models across the entire lifecycle of a Twin.",
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1789139318/tutorial_nijlxi.webp",
+        isLogo: false,
+        link: "https://swc-ieee-2026.github.io/tutorials/digital-twin/"
+    },
+    {
         id: "ieee-metrolivenv-2026",
         title: "Wearable Monitoring for Early Cardiotoxicity Detection in Cancer Patients: The COMPASS Vision",
         event: "2026 IEEE International Workshop on Metrology for Living Environment - IEEE MetroLivEnv 2026",

@@ -76,7 +76,7 @@ export default async function TalkDetailPage(props: { params: Promise<{ id: stri
                             src={withBasePath(talk.image || "/placeholder.webp")}
                             alt={talk.title}
                             fill
-                            style={{ objectFit: "cover", objectPosition: "center" }}
+                            style={{ objectFit: "cover", objectPosition: (talk as { imagePosition?: string }).imagePosition || "center" }}
                             priority
                         />
                     </div>
