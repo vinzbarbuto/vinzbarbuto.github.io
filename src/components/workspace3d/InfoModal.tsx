@@ -191,9 +191,16 @@ export default function InfoModal({ section, onClose }: InfoModalProps) {
                 </div>
                 <div className={styles.cardSub}>{talk.event}</div>
                 <p className={styles.cardDesc}>{talk.description}</p>
-                <Link href={`/talks/${talk.id}`} className={styles.cardLink} onClick={onClose}>
-                  View Presentation Details <ArrowRight size={14} />
-                </Link>
+                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+                  <Link href={`/talks/${talk.id}`} className={styles.cardLink} onClick={onClose}>
+                    View Presentation Details <ArrowRight size={14} />
+                  </Link>
+                  {talk.slides && (
+                    <a href={talk.slides} target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
+                      View Slides <ExternalLink size={14} />
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>

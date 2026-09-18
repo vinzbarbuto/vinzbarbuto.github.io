@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Calendar, MapPin } from "lucide-react";
+import { ArrowLeft, ExternalLink, Calendar, MapPin, Presentation } from "lucide-react";
 import { talks } from "@/data/talks";
 import { withBasePath } from "@/lib/basePath";
 import styles from "../../page.module.css";
@@ -76,7 +76,7 @@ export default async function TalkDetailPage(props: { params: Promise<{ id: stri
                             src={withBasePath(talk.image || "/placeholder.webp")}
                             alt={talk.title}
                             fill
-                            style={{ objectFit: "cover", objectPosition: (talk as { imagePosition?: string }).imagePosition || "center" }}
+                            style={{ objectFit: "cover", objectPosition: talk.imagePosition || "center" }}
                             priority
                         />
                     </div>
@@ -103,11 +103,18 @@ export default async function TalkDetailPage(props: { params: Promise<{ id: stri
                 </p>
             </div>
 
-            {talk.link && talk.link !== "#" && (
-                <div style={{ borderTop: "1px solid var(--card-border)", paddingTop: "2rem" }}>
-                    <a href={talk.link} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", backgroundColor: "var(--primary)", color: "white", borderRadius: "0.75rem", textDecoration: "none", fontWeight: "500", transition: "background-color 0.2s ease" }}>
-                        <ExternalLink size={18} /> View Event Details
-                    </a>
+            {((talk.link && talk.link !== "#") || talk.slides) && (
+                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", borderTop: "1px solid var(--card-border)", paddingTop: "2rem" }}>
+                    {talk.link && talk.link !== "#" && (
+                        <a href={talk.link} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", backgroundColor: "var(--primary)", color: "white", borderRadius: "0.75rem", textDecoration: "none", fontWeight: "500", transition: "background-color 0.2s ease" }}>
+                            <ExternalLink size={18} /> View Event Details
+                        </a>
+                    )}
+                    {talk.slides && (
+                        <a href={talk.slides} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", backgroundColor: "var(--card-bg)", color: "var(--foreground)", border: "1px solid var(--card-border)", borderRadius: "0.75rem", textDecoration: "none", fontWeight: "500", transition: "all 0.2s ease" }}>
+                            <Presentation size={18} /> View Slides
+                        </a>
+                    )}
                 </div>
             )}
         </div>

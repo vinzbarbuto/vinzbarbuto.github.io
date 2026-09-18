@@ -1,4 +1,17 @@
-export const talks = [
+export interface Talk {
+    id: string;
+    title: string;
+    event: string;
+    date: string;
+    description: string;
+    image: string;
+    imagePosition?: string;
+    isLogo?: boolean;
+    link?: string;
+    slides?: string;
+}
+
+export const talks: Talk[] = [
     {
         id: "ieee-digital-twin-2026",
         title: "An Edge-Cloud Digital Twin Platform for Intelligent Smart Park Services",
@@ -17,8 +30,10 @@ export const talks = [
         date: "September 2026",
         description: "Tutorial co-presented with Dr. Roberto Minerva exploring the software-oriented foundations of Digital Twin engineering. It examines how architectural choices, AI techniques (Deep Learning, Generative AI, and Reinforcement Learning in the loop), and top-down/bottom-up methodologies shape viable behavior models across the entire lifecycle of a Twin.",
         image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1789139318/tutorial_nijlxi.webp",
+        imagePosition: "center 62%",
         isLogo: false,
-        link: "https://swc-ieee-2026.github.io/tutorials/digital-twin/"
+        link: "https://swc-ieee-2026.github.io/tutorials/digital-twin/",
+        slides: "https://drive.google.com/file/d/17JBix0wWC5TQ1sD-wOnUK3eQf3hp36FK/view?usp=drive_link"
     },
     {
         id: "ieee-metrolivenv-2026",

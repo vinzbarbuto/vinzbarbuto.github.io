@@ -823,6 +823,10 @@
     border-right: none;
     border-bottom: 1px solid var(--card-border);
   }
+
+  .talkDetailHeroInner {
+    height: 280px;
+  }
 }
 
 /* Logo image inner wrapper — used inside previewImageWrapper for logo-type images */
@@ -857,7 +861,7 @@
 .talkDetailHeroInner {
   position: relative;
   width: 100%;
-  height: 380px;
+  height: 420px;
 }
 
 /* For logo-style images: compact, padded, centered */

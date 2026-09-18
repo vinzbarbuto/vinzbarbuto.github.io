@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Filter, ChevronLeft, ChevronRight, Calendar, MapPin } from "lucide-react";
+import { Search, Filter, ChevronLeft, ChevronRight, Calendar, MapPin, Presentation } from "lucide-react";
 import { withBasePath } from "@/lib/basePath";
 import styles from "@/app/page.module.css";
 
@@ -17,6 +17,7 @@ interface TalkItem {
     event?: string;
     date?: string;
     link?: string;
+    slides?: string;
 }
 
 export default function TalksClient({ talks }: { talks: TalkItem[] }) {
@@ -211,6 +212,14 @@ export default function TalksClient({ talks }: { talks: TalkItem[] }) {
                                     <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                                         <Calendar size={16} /> {talk.date}
                                     </span>
+                                    {talk.slides && (
+                                        <>
+                                            <span>•</span>
+                                            <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                                                <Presentation size={16} /> Slides
+                                            </span>
+                                        </>
+                                    )}
                                 </div>
 
                                 <p className={styles.previewDesc}>
