@@ -43,7 +43,7 @@ export const profile = {
         github: "https://github.com/vbarbuto",
         linkedin: "https://www.linkedin.com/in/vbarbuto/",
         scholar: "https://scholar.google.com/citations?user=_-riw5YAAAAJ",
-        scopus: "https://www.scopus.com/authid/detail.uri?authorId=58788950800",
+        scopus: "https://www.scopus.com/authid/detail.uri?authorId=58161584500",
         email: "mailto:vincenzo.barbuto@unical.it",
         cv: withBasePath("/cv/resume.pdf")
     }
