@@ -1,22 +1,31 @@
-export interface Publication {
-    id: string;
-    title: string;
-    authors: string;
-    venue: string;
-    type: string;
-    year: number;
-    abstract: string;
-    links: {
-        url?: string;
-        pdf?: string;
-        doi?: string;
-    };
-    image?: string;
-    tags: string[];
-    bibtex: string;
-}
+import type { CuratedPublication } from "./publications";
 
-export const publications: Publication[] = [
+/**
+ * Hand-curated publication data. Never touched by the sync script.
+ *
+ * `publications.generated.json` is rebuilt from OpenAlex by
+ * `scripts/sync-publications.mjs`. An entry here is paired with a generated
+ * record by DOI (`links.doi`) or, failing that, by title, and every field set
+ * here wins over the generated value. So an entry can be as small as
+ * `{ links: { doi: "https://doi.org/..." }, image: "...", tags: [...] }`.
+ *
+ * An entry with no generated counterpart is a fully manual publication and
+ * must carry id, title, authors, venue, type and year.
+ *
+ * Order: within a year, entries keep the order of this file; papers that only
+ * exist in the generated file are listed above them, newest first.
+ */
+export const curatedPublications: CuratedPublication[] = [
+    {
+        // Agentic AI and Digital Twin: A Good Marriage? (everything else comes from OpenAlex)
+        links: { doi: "https://doi.org/10.1109/swc69865.2026.11763958" },
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1794404469/agentic-ai-digital-twin_lmzwez.webp",
+    },
+    {
+        // An Edge–Cloud Digital Twin Platform for Intelligent Smart Park Services
+        links: { doi: "https://doi.org/10.1109/swc69865.2026.11764067" },
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1794404470/smart-park-platform_f7qnla.webp",
+    },
     {
         id: "metrolivenv2026",
         title: "Wearable Monitoring for Early Cardiotoxicity Detection in Cancer Patients: The COMPASS Vision",
@@ -121,13 +130,7 @@ export const publications: Publication[] = [
         },
         image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1774542832/featured_pu3e7i.png",
         tags: ["Digital Twin", "Lingua Franca", "Edge Intelligence"],
-        bibtex: `@article{barbuto2025engineering,
-  title={Engineering Opportunistic Digital Twins with Lingua Franca},
-  author={Barbuto, Vincenzo and Savaglio, Claudio and Minerva, Roberto and Crespi, Noel and Fortino, Giancarlo},
-  journal={Future Generation Computer Systems},
-  year={2025},
-  publisher={Elsevier}
-}`
+        bibtex: ``
     },
     {
         id: "ipdpsw2025",
@@ -228,7 +231,6 @@ export const publications: Publication[] = [
         id: "opportunistic_dt2023",
         title: "Opportunistic Digital Twin: an Edge Intelligence enabler for Smart City",
         authors: "C Savaglio, V Barbuto, FM Awan, R Minerva, N Crespi, G Fortino",
-        venue: "ACM",
         type: "Journal Article",
         year: 2023,
         abstract: "Although Digital Twins (DTs) became very popular in industry, nowadays they represent a pre-requisite of many systems across different domains, by taking advantage of the disrupting digital technologies such as Artificial Intelligence (AI), Edge Computing and Internet of Things (IoT). In this paper we present our “opportunistic” interpretation, which advances the traditional DT concept and provides a valid support for enabling next-generation solutions in dynamic, distributed and large scale scenarios as smart cities. Indeed, by collecting simple data from the environment and by opportunistically elaborating them through AI techniques directly at the network edge (also referred to as Edge Intelligence), a digital version of a physical object can be built from the bottom up as well as dynamically manipulated and operated in a data-driven manner, thus enabling prompt responses to external stimuli and effective command actuation. To demonstrate the viability of our Opportunistic Digital Twin (ODT) a real use case focused on a traffic prediction task has been incrementally developed and presented, showing improved inference performance and reduced network latency, bandwidth and power consumption.",
@@ -251,7 +253,6 @@ export const publications: Publication[] = [
         id: "edge_intelligence_survey",
         title: "Disclosing Edge Intelligence: A Systematic Meta-Survey",
         authors: "V Barbuto, C Savaglio, M Chen, G Fortino",
-        venue: "MDPI",
         type: "Journal Article",
         year: 2023,
         abstract: "The Edge Intelligence (EI) paradigm has recently emerged as a promising solution to overcome the inherent limitations of cloud computing (latency, autonomy, cost, etc.) in the development and provision of next-generation Internet of Things (IoT) services. Therefore, motivated by its increasing popularity, relevant research effort was expended in order to explore, from different perspectives and at different degrees of detail, the many facets of EI. In such a context, the aim of this paper was to analyze the wide landscape on EI by providing a systematic analysis of the state-of-the-art manuscripts in the form of a tertiary study (i.e., a review of literature reviews, surveys, and mapping studies) and according to the guidelines of the PRISMA methodology. A comparison framework is, hence, provided and sound research questions outlined, aimed at exploring (for the benefit of both experts and beginners) the past, present, and future directions of the EI paradigm and its relationships with the IoT and the cloud computing worlds.",
@@ -297,3 +298,10 @@ export const publications: Publication[] = [
 }`
     }
 ];
+
+/**
+ * Works that OpenAlex attributes to me but that must not appear on the site
+ * (wrong author match, duplicate, erratum...). Each item is a DOI, an OpenAlex
+ * work ID (e.g. "W4385980199") or an exact title.
+ */
+export const hiddenPublications: string[] = [];

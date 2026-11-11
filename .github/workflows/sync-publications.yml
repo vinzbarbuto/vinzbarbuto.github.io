@@ -1,0 +1,76 @@
+name: Sync publications from OpenAlex
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC
+    - cron: "0 6 * * 1"
+  # Allows a manual run from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-publications
+  cancel-in-progress: false
+
+env:
+  BRANCH: auto/sync-publications
+  DATA_FILE: src/data/publications.generated.json
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history: the PR step compares the sync branch against main.
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Fetch publications
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+        run: node scripts/sync-publications.mjs --summary "$RUNNER_TEMP/summary.md"
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "$(git status --porcelain -- "$DATA_FILE")" ]; then
+            echo "Publications already up to date."
+            exit 0
+          fi
+
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$pr" ]; then
+            git fetch origin "$BRANCH"
+            # Never overwrite commits someone pushed to the open PR by hand.
+            manual=$(git log origin/main..FETCH_HEAD --format='%ae' | grep -v 'github-actions\[bot\]' || true)
+            if [ -n "$manual" ]; then
+              echo "::warning::PR #$pr has manual commits: merge or close it, then re-run this workflow."
+              exit 0
+            fi
+            if git diff --quiet FETCH_HEAD -- "$DATA_FILE"; then
+              echo "PR #$pr already has these changes."
+              exit 0
+            fi
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add "$DATA_FILE"
+          git commit -m "chore: sync publications from OpenAlex"
+          git push --force origin "$BRANCH"
+
+          if [ -n "$pr" ]; then
+            gh pr edit "$pr" --body-file "$RUNNER_TEMP/summary.md"
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "chore: sync publications from OpenAlex" \
+              --body-file "$RUNNER_TEMP/summary.md"
+          fi

@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { publications } from "@/data/publications";
 import { withBasePath } from "@/lib/basePath";
 import CiteButton from "@/components/CiteButton";
+import ZoomableImage from "@/components/ZoomableImage";
 
 const SITE_URL = "https://vincenzobarbuto.com";
 
@@ -21,7 +21,9 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
     if (!pub) {
         return { title: "Publication" };
     }
-    const description = pub.abstract.length > 200 ? `${pub.abstract.slice(0, 197)}…` : pub.abstract;
+    // A freshly synced paper may not have an abstract yet.
+    const summary = pub.abstract || `${pub.type} by ${pub.authors}. ${pub.venue}, ${pub.year}.`;
+    const description = summary.length > 200 ? `${summary.slice(0, 197)}…` : summary;
     const image = pub.image || `${SITE_URL}/placeholder.webp`;
     return {
         title: pub.title,
@@ -79,15 +81,11 @@ export default async function PublicationDetailPage(props: { params: Promise<{ i
                 <ArrowLeft size={16} /> Back to Publications
             </Link>
 
-            <div style={{ position: "relative", width: "100%", height: "400px", borderRadius: "1rem", overflow: "hidden", marginBottom: "3rem", backgroundColor: "var(--card-bg)" }}>
-                <Image
-                    src={withBasePath(pub.image || "/placeholder.webp")}
-                    alt={pub.title}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                />
-            </div>
+            <ZoomableImage
+                src={withBasePath(pub.image || "/placeholder.webp")}
+                alt={pub.title}
+                zoomable={Boolean(pub.image)}
+            />
 
             <h1 style={{ fontSize: "2.5rem", fontWeight: "700", fontFamily: "var(--font-space-grotesk)", color: "var(--foreground)", marginBottom: "1rem", lineHeight: "1.2" }}>
                 {pub.title}
@@ -113,12 +111,14 @@ export default async function PublicationDetailPage(props: { params: Promise<{ i
                 ))}
             </div>
 
-            <div style={{ marginBottom: "4rem" }}>
-                <h2 style={{ fontSize: "1.5rem", fontWeight: "600", fontFamily: "var(--font-space-grotesk)", color: "var(--foreground)", marginBottom: "1rem" }}>Abstract</h2>
-                <p style={{ fontSize: "1.1rem", lineHeight: "1.7", color: "var(--secondary)" }}>
-                    {pub.abstract}
-                </p>
-            </div>
+            {pub.abstract && (
+                <div style={{ marginBottom: "4rem" }}>
+                    <h2 style={{ fontSize: "1.5rem", fontWeight: "600", fontFamily: "var(--font-space-grotesk)", color: "var(--foreground)", marginBottom: "1rem" }}>Abstract</h2>
+                    <p style={{ fontSize: "1.1rem", lineHeight: "1.7", color: "var(--secondary)" }}>
+                        {pub.abstract}
+                    </p>
+                </div>
+            )}
 
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", borderTop: "1px solid var(--card-border)", paddingTop: "2rem" }}>
                 {pub.links.url && (

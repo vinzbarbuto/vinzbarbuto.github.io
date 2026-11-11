@@ -106,7 +106,9 @@ export default function InfoModal({ section, onClose }: InfoModalProps) {
                     <h3 className={styles.cardTitle} style={{ fontSize: "15px", marginBottom: "0.5rem" }}>{pub.title}</h3>
                     <div className={styles.cardSub} style={{ fontSize: "13px" }}>{pub.authors}</div>
                     <div className={styles.cardSub} style={{ fontSize: "13px", opacity: 0.8, marginBottom: "0.5rem" }}>{pub.venue}</div>
-                    <p className={styles.cardDesc} style={{ fontSize: "13px", opacity: 0.85 }}>{pub.abstract.slice(0, 160)}...</p>
+                    {pub.abstract && (
+                      <p className={styles.cardDesc} style={{ fontSize: "13px", opacity: 0.85 }}>{pub.abstract.slice(0, 160)}...</p>
+                    )}
                     <div className={styles.cardTags} style={{ marginBottom: "0.75rem" }}>
                       {pub.tags.map((tag) => (
                         <span key={tag} className={styles.cardTag}>{tag}</span>

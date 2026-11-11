@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, MapPin, Presentation } from "lucide-react";
 import { talks } from "@/data/talks";
 import { withBasePath } from "@/lib/basePath";
+import ZoomableImage from "@/components/ZoomableImage";
 import styles from "../../page.module.css";
 
 export function generateStaticParams() {
@@ -70,16 +71,14 @@ export default async function TalkDetailPage(props: { params: Promise<{ id: stri
                         />
                     </div>
                 ) : (
-                    /* Photo: full-bleed cover */
-                    <div className={styles.talkDetailHeroInner}>
-                        <Image
-                            src={withBasePath(talk.image || "/placeholder.webp")}
-                            alt={talk.title}
-                            fill
-                            style={{ objectFit: "cover", objectPosition: talk.imagePosition || "center" }}
-                            priority
-                        />
-                    </div>
+                    /* Photo: full-bleed cover, opens uncropped on click */
+                    <ZoomableImage
+                        src={withBasePath(talk.image || "/placeholder.webp")}
+                        alt={talk.title}
+                        className={styles.talkDetailHeroInner}
+                        objectPosition={talk.imagePosition || "center"}
+                        zoomable={Boolean(talk.image)}
+                    />
                 )}
             </div>
 

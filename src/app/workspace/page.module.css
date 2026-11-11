@@ -27,7 +27,6 @@
   max-width: 420px;
   background: var(--surface-glass);
   backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--surface-border);
   padding: 2.5rem 2rem;
   border-radius: var(--radius-xl);

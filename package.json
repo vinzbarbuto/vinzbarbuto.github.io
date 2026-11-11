@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync:publications": "node scripts/sync-publications.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
