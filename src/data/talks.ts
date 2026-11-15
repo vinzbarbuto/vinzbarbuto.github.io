@@ -13,6 +13,16 @@ export interface Talk {
 
 export const talks: Talk[] = [
     {
+        id: "icon-2026",
+        title: "MACON: Autonomous MAPE-K-Based Orchestration Across the Edge-Cloud Continuum",
+        event: "1st Workshop on IoT Applications and Cyber-Physical Systems in the Edge–Cloud Continuum (ICON 2026) @ IEEE NCA 2026",
+        date: "November 2026",
+        description: "Presentation of our paper \"MACON: Autonomous MAPE-K-Based Orchestration Across the Edge-Cloud Continuum\" (co-authored with Marco Loaiza, Claudio Savaglio, and Raffaele Gravina) at the 1st ICON Workshop, co-located with IEEE NCA 2026 in Ortigia-Syracuse, Italy. The talk presented MACON, an autonomic orchestration framework leveraging the MAPE-K (Monitor-Analyze-Plan-Execute over shared Knowledge) control loop to achieve dynamic and self-adaptive workload and service placement across heterogeneous resources in the edge-cloud continuum.",
+        image: "https://res.cloudinary.com/dgec2pai8/image/upload/v1794751448/_DSC2584_oicney.webp",
+        isLogo: false,
+        link: "https://workshop-icon.github.io/2026/"
+    },
+    {
         id: "ieee-digital-twin-2026",
         title: "An Edge-Cloud Digital Twin Platform for Intelligent Smart Park Services",
         event: "The 2026 IEEE International Conference on Digital Twin (IEEE Digital Twin 2026)",
